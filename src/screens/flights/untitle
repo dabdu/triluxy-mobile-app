@@ -1,0 +1,135 @@
+import { View, Text, FlatList, ScrollView } from "react-native";
+import React, { useState } from "react";
+import { InputField, SecBtn } from "../../components/Forms";
+import { Fontisto } from "@expo/vector-icons";
+import { colors } from "../../../constants/theme";
+import { ListItem } from "../../components";
+import { useNavigation } from "@react-navigation/native";
+
+const SearchScreen = () => {
+  const [origin, setOrigin] = useState("");
+  const [destination, setDestination] = useState("");
+  const [selected, setSelected] = useState(false);
+  const navigation = useNavigation();
+  const data = [
+    {
+      id: 12,
+      name: "Dubai",
+      image:
+        "https://th.bing.com/th/id/R.ed041b61d80635960008bb44b178d590?rik=l6qdGZrAUfcAzA&pid=ImgRaw&r=0",
+      price: 2300,
+      isFavorite: true,
+    },
+    {
+      id: 122,
+      name: "Dubai",
+      image:
+        "https://th.bing.com/th/id/R.ed041b61d80635960008bb44b178d590?rik=l6qdGZrAUfcAzA&pid=ImgRaw&r=0",
+      price: 2300,
+      isFavorite: false,
+    },
+    {
+      id: 121,
+      name: "Dubai",
+      image:
+        "https://th.bing.com/th/id/R.ed041b61d80635960008bb44b178d590?rik=l6qdGZrAUfcAzA&pid=ImgRaw&r=0",
+      price: 2300,
+      isFavorite: true,
+    },
+    {
+      id: 123,
+      name: "Dubai",
+      image:
+        "https://th.bing.com/th/id/R.ed041b61d80635960008bb44b178d590?rik=l6qdGZrAUfcAzA&pid=ImgRaw&r=0",
+      price: 2300,
+      isFavorite: false,
+    },
+  ];
+  return (
+    <View style={{ backgroundColor: "white", height: "100%" }}>
+      <ScrollView>
+        {/* Header */}
+        <View
+          style={{
+            height: 290,
+            width: "100%",
+            backgroundColor: "#F2F2F2",
+            marginTop: 30,
+          }}
+        >
+          <View style={{ marginVertical: 20, marginHorizontal: 30 }}>
+            <InputField
+              value={origin}
+              placeholder="origin"
+              Icon={Fontisto}
+              iconName="arrow-down"
+              setInput={setOrigin}
+              color={colors.primary}
+              background={"white"}
+            />
+            <InputField
+              value={origin}
+              placeholder="Enter Destination"
+              Icon={Fontisto}
+              iconName="map-marker-alt"
+              setInput={setOrigin}
+              color={colors.primary}
+              background={"white"}
+            />
+          </View>
+          <View style={{ marginHorizontal: 30 }}>
+            {/* CheckBox Here */}
+            <View
+              style={{
+                height: 80,
+                width: "100%",
+                borderColor: colors.primary,
+                borderWidth: 1,
+              }}
+            >
+              <Text>Map Result HEre</Text>
+            </View>
+            <Text
+              style={{
+                fontSize: 18,
+                color: colors.darkPrimary,
+                fontWeight: "600",
+                marginVertical: 10,
+              }}
+            >
+              Popular Flight Destinations
+            </Text>
+          </View>
+        </View>
+        <View
+          style={{
+            width: "100%",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            justifyContent: "space-around",
+            alignItems: "center",
+            marginBottom: 70,
+            paddingHorizontal: 10,
+          }}
+        >
+          {data && data.map((item) => <ListItem key={item.id} data={item} />)}
+        </View>
+      </ScrollView>
+      <View
+        style={{
+          position: "absolute",
+          bottom: 0,
+          width: "100%",
+          paddingHorizontal: 20,
+        }}
+      >
+        <SecBtn
+          text={"Search"}
+          onBtnPress={() => navigation.navigate("FlightSearchScreen")}
+        />
+      </View>
+    </View>
+  );
+};
+
+export default SearchScreen;
