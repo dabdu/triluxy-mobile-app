@@ -1,16 +1,36 @@
 import { View, Text, FlatList } from "react-native";
-import React from "react";
-import { Header } from "../../components";
+import React, { useEffect } from "react";
+import { Header, TransparentSpinner } from "../../components";
 import { colors } from "../../../constants/theme";
 import { CountryItem } from "../../components/flight-components";
 import Footer from "../../components/Layouts/Footer";
+import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const FlightHome = () => {
+  const navigation = useNavigation();
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem("user");
+        if (!jsonValue) {
+          navigation.navigate("LoginScreen");
+        } else {
+          // console.log(jsonValue);
+        }
+      } catch (e) {
+        console.log(e);
+        // error reading value
+      }
+    };
+    getUser();
+  }, []);
+
   const data = [
     {
       id: "hjsh7sshsh",
       image:
-        "https://s3-alpha-sig.figma.com/img/0f8f/6b9a/257f9396305b2c8bcd74fc26b6335e8e?Expires=1657497600&Signature=fTJ8uZ3RiQR8jfEhLj1QafsfRhVKUnqTDVPdqj8AfbwqAPy6Sdp6vQEuBwGioyIITZogV5VuryQak1mPwFEQSFPkkufv3xHRuPeXrHdrdIMglk~ZH8u4G3OcLIk7ExrT~37-3fkdxjqoHiER8Qi5uv8P3zxvm5q3960VAw97SkskJruJXVNAZu3b0bJXl4gPbH0gzku1Q6lC56pb1Y7rZUMTLwY1Odj81v0EO2EmCdwPxJ2QHultUWq0g7IGBPVf~MO-YYqlZ5exL6Tsh2v6tLBE5JMKwBC3BQI3mnnW-UaUMHk4uYN82i7uaYBBPgzX-~4s5a9kbwwRQMKpMR2e8Q__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
+        "https://firebasestorage.googleapis.com/v0/b/house-marketplace-b3077.appspot.com/o/images%2FpwmIbFIX7sVRqpjnCSdqUlwgE5i1-earthy-home-decor-decorating-ideas_102915-840x450.jpg-36af6716-2e90-4421-a13c-6c2e8cb4fa08?alt=media&token=f4e17dfb-bb20-4040-8ca2-3fa79a89764a",
       name: "Turkey",
       desc: "COVID-19 test required",
       flagImg:
@@ -19,7 +39,7 @@ const FlightHome = () => {
     {
       id: "hjshsh",
       image:
-        "https://s3-alpha-sig.figma.com/img/222f/0132/2b1af07a46882e7633bc8d98b1d2d44e?Expires=1657497600&Signature=LyN1AED~6H7PcW729AK22kBwAJIIqwoSpi27t7He-RWT5qsw~mPmA7nl6EA8zZsWCubwFwqrjjqUBxn-glWektz~xBUpQe9YjKwz1IkxvesGta6p36VoXMCQVYpzLOmq6oIZ2ROJjXtBuKQrjl8cgzVx6gUis9xrEVC5X5DGU9haH8Z2pSOgmFYNVps9HUlOXUyKGyuu~hFHhexatVxVg5MRZadY3x3dtzsjMXQUHHTXp8N2pAaxyzyVQFAKnJDmt01wJtFl-dFM9b-xZ6qRcfB~Krv~2f38edA~30tzHO0pqCRRqFakTN7Sm5Nv-ZqQAcu3otdZfUY1mTZCwgEePw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
+        "https://firebasestorage.googleapis.com/v0/b/house-marketplace-b3077.appspot.com/o/images%2FpwmIbFIX7sVRqpjnCSdqUlwgE5i1-earthy-home-decor-decorating-ideas_102915-840x450.jpg-36af6716-2e90-4421-a13c-6c2e8cb4fa08?alt=media&token=f4e17dfb-bb20-4040-8ca2-3fa79a89764a",
       name: "Mexico",
       desc: "COVID-19 test required",
       flagImg:
@@ -72,7 +92,7 @@ const FlightHome = () => {
           showsHorizontalScrollIndicator={false}
         />
       </View>
-      <Footer active={"search"} searchPath={"FlightSearchScreen"} />
+      <Footer active={"search"} searchPath={"FlightHome"} />
     </View>
   );
 };

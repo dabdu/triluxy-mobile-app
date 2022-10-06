@@ -40,6 +40,7 @@ const ImageSlider = ({ images }) => {
                 marginHorizontal: 25,
               }}
               source={{ uri: e }}
+              resizeMode="contain"
             />
           </View>
         ))}
@@ -47,6 +48,7 @@ const ImageSlider = ({ images }) => {
       <View style={styles.wrapDot}>
         {images.map((e, index) => (
           <Image
+            key={e}
             style={activeImg == index ? styles.activeDot : styles.dot}
             source={{ uri: e }}
           />

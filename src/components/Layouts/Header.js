@@ -7,20 +7,19 @@ import {
   StyleSheet,
 } from "react-native";
 import React from "react";
-import { colors, headerImg, SHADOWS } from "../../../constants/theme";
+import { colors, homeImg, SHADOWS } from "../../../constants/theme";
 import {
   Ionicons,
   Entypo,
   AntDesign,
-  MaterialIcons,
   FontAwesome,
   FontAwesome5,
+  MaterialIcons,
 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 const Header = ({ placeholder, active, searchPath }) => {
   const navigation = useNavigation();
-  const image = { uri: headerImg };
   return (
     <View
       style={{
@@ -77,7 +76,7 @@ const Header = ({ placeholder, active, searchPath }) => {
       </View>
       <ImageBackground
         source={{
-          uri: "https://s3-alpha-sig.figma.com/img/7b1d/a6e3/b5ffe5b9d2c1e65952fb1de7362f5bcd?Expires=1657497600&Signature=h3ltqtM0W9V18oFALWBbzVKh0XNYZoV~lmBYFDiNHqATJqyu1JzCR4WzE0dx-4QEYRnVCdw~xabEQJHOj8yravGBFkyS9noQ68wJSX~BaRG1i7da6idcJOEML4fORfLoN~v2S~XthS88rbEYH4Jh3vGemwfTl7sXsvppbqWFPZkFnbRHAi536u4ykwv9c5Tki3HISbXA6Ik5VGPA-2-q~OJwZMPl3f8IyrL8FGRZE8ZsiokaYXxDnX0ySTT3FeiJvVP6thaKhc1Q9b6QtoxNOP8tS9k7~2z6VKFvKSxoCGkDyCwv653i5-Ae-04wxCahxSq7GgWQ9XXBt0hzdfFXtg__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
+          uri: "https://stockphoto.com/samples/NjkwNTc5NDE0MDAxMWY1YmNmYjBlZA==/MjIxMWY1YmNmYjBlZA==/giraffe-walking-on-the-plains-of-the-masai-mara-national-park-in-kenya.jpg&size=1024",
         }}
         style={{
           height: 100,
@@ -128,7 +127,7 @@ const Header = ({ placeholder, active, searchPath }) => {
           marginVertical: 2,
         }}
       >
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.iconContainer}
           onPress={() => navigation.navigate("FlightHome")}
         >
@@ -145,7 +144,7 @@ const Header = ({ placeholder, active, searchPath }) => {
           >
             Flights
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity
           style={styles.iconContainer}
           onPress={() => navigation.navigate("HotelHome")}
@@ -164,7 +163,10 @@ const Header = ({ placeholder, active, searchPath }) => {
             Hotels
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.iconContainer}>
+        <TouchableOpacity
+          style={styles.iconContainer}
+          onPress={() => navigation.navigate("CarHome")}
+        >
           <AntDesign
             name="car"
             size={30}
@@ -179,7 +181,10 @@ const Header = ({ placeholder, active, searchPath }) => {
             Car Rental
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.iconContainer}>
+        <TouchableOpacity
+          style={styles.iconContainer}
+          onPress={() => navigation.navigate("TaxiSearchScreen")}
+        >
           <FontAwesome
             name="taxi"
             size={30}
@@ -191,7 +196,25 @@ const Header = ({ placeholder, active, searchPath }) => {
               { color: active === "taxi" ? colors.primary : "white" },
             ]}
           >
-            Airport Taxi
+            Taxi
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.iconContainer}
+          onPress={() => navigation.navigate("RestaurantHome")}
+        >
+          <Ionicons
+            name="restaurant"
+            size={30}
+            color={active === "restaurants" ? colors.primary : "white"}
+          />
+          <Text
+            style={[
+              styles.text,
+              { color: active === "restaurants" ? colors.primary : "white" },
+            ]}
+          >
+            Restaurants
           </Text>
         </TouchableOpacity>
       </View>

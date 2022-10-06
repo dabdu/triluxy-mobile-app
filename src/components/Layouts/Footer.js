@@ -8,9 +8,12 @@ import {
 } from "@expo/vector-icons";
 import { colors } from "../../../constants/theme";
 import { useNavigation } from "@react-navigation/native";
+import { useAuthContext } from "../../../context/AuthContext";
 
 const Footer = ({ active, searchPath }) => {
   const navigation = useNavigation();
+  const { authUser } = useAuthContext();
+  const { userRole } = authUser;
   const newPath = searchPath ? searchPath : "FlightSearchScreen";
   return (
     <View
@@ -26,62 +29,131 @@ const Footer = ({ active, searchPath }) => {
         paddingVertical: 10,
       }}
     >
-      <TouchableOpacity
-        style={styles.iconContainer}
-        onPress={() => navigation.navigate(newPath)}
-      >
-        <AntDesign
-          name="search1"
-          size={24}
-          color={active === "search" ? colors.primary : colors.secondary}
-        />
-        <Text
-          style={[
-            styles.text,
-            { color: active === "search" ? colors.primary : colors.secondary },
-          ]}
-        >
-          Search
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.iconContainer}>
-        <AntDesign
-          name="hearto"
-          size={24}
-          color={active === "favourites" ? colors.primary : colors.secondary}
-        />
-        <Text
-          style={[
-            styles.text,
-            {
-              color:
-                active === "favourites" ? colors.primary : colors.secondary,
-            },
-          ]}
-        >
-          favourites
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.iconContainer}>
-        <MaterialCommunityIcons
-          name="briefcase-outline"
-          size={24}
-          color={active === "booking" ? colors.primary : colors.secondary}
-        />
-        <Text
-          style={[
-            styles.text,
-            { color: active === "booking" ? colors.primary : colors.secondary },
-          ]}
-        >
-          Bookings
-        </Text>
-      </TouchableOpacity>
+      {/* User Only MEnu Items  */}
+      {userRole === "User" && (
+        <>
+          <TouchableOpacity
+            style={styles.iconContainer}
+            onPress={() => navigation.navigate("HotelHome")}
+          >
+            <AntDesign
+              name="search1"
+              size={24}
+              color={active === "search" ? colors.primary : colors.secondary}
+            />
+            <Text
+              style={[
+                styles.text,
+                {
+                  color:
+                    active === "search" ? colors.primary : colors.secondary,
+                },
+              ]}
+            >
+              Search
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.iconContainer}
+            onPress={() => navigation.navigate("ManageBooking")}
+          >
+            <MaterialCommunityIcons
+              name="briefcase-outline"
+              size={24}
+              color={active === "booking" ? colors.primary : colors.secondary}
+            />
+            <Text
+              style={[
+                styles.text,
+                {
+                  color:
+                    active === "booking" ? colors.primary : colors.secondary,
+                },
+              ]}
+            >
+              Bookings
+            </Text>
+          </TouchableOpacity>
+        </>
+      )}
+      {/* Restaurant Admin Only MEnu Items  */}
+      {userRole === "resAdmin" && (
+        <>
+          <TouchableOpacity
+            style={styles.iconContainer}
+            onPress={() => navigation.navigate("Home")}
+          >
+            <AntDesign
+              name="trademark"
+              size={24}
+              color={
+                active === "reservations" ? colors.primary : colors.secondary
+              }
+            />
+            <Text
+              style={[
+                styles.text,
+                {
+                  color:
+                    active === "reservations"
+                      ? colors.primary
+                      : colors.secondary,
+                },
+              ]}
+            >
+              Reservations
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.iconContainer}
+            // onPress={() => navigation.navigate("ManageBooking")}
+          >
+            <Ionicons
+              name="fast-food-outline"
+              size={24}
+              color={active === "booking" ? colors.primary : colors.secondary}
+            />
+            <Text
+              style={[
+                styles.text,
+                {
+                  color:
+                    active === "booking" ? colors.primary : colors.secondary,
+                },
+              ]}
+            >
+              Orders
+            </Text>
+          </TouchableOpacity>
+          {/* <TouchableOpacity
+            style={styles.iconContainer}
+            onPress={() => navigation.navigate("ManageBooking")}
+          >
+            <Ionicons
+              name="restaurant-outline"
+              size={24}
+              color={active === "my-res" ? colors.primary : colors.secondary}
+            />
+            <Text
+              style={[
+                styles.text,
+                {
+                  color:
+                    active === "my-res" ? colors.primary : colors.secondary,
+                },
+              ]}
+            >
+              My Restaurant
+            </Text>
+          </TouchableOpacity> */}
+        </>
+      )}
       <TouchableOpacity style={styles.iconContainer}>
         <Ionicons
           name="md-wallet-outline"
           size={24}
           color={active === "wallet" ? colors.primary : colors.secondary}
+          onPress={() => navigation.navigate("WalletIndexScreen")}
         />
         <Text
           style={[
@@ -92,7 +164,10 @@ const Footer = ({ active, searchPath }) => {
           Wallet
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.iconContainer}>
+      <TouchableOpacity
+        style={styles.iconContainer}
+        onPress={() => navigation.navigate("ProfileScreen")}
+      >
         <FontAwesome5
           name="user-circle"
           size={24}

@@ -1,7 +1,14 @@
 import { View, Text, TextInput } from "react-native";
 import { colors, SIZES } from "../../../constants/theme";
 
-export const FlightSearchInput = ({ placeholder, desc, type, width }) => {
+export const FlightSearchInput = ({
+  placeholder,
+  desc,
+  type,
+  width,
+  setInput,
+  value,
+}) => {
   return (
     <View
       style={{
@@ -33,6 +40,8 @@ export const FlightSearchInput = ({ placeholder, desc, type, width }) => {
             width: "100%",
           }}
           keyboardType={type ? type : "default"}
+          value={value}
+          onChangeText={(text) => setInput(text)}
         />
       </View>
     </View>

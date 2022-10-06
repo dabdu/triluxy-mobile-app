@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import React from "react";
 import NumberFormat from "react-number-format";
-import { colors } from "../../constants/theme";
+import { colors, FONTS } from "../../constants/theme";
 
 const FormatedNumber = ({ value, size, color }) => {
   return (
@@ -16,8 +16,8 @@ const FormatedNumber = ({ value, size, color }) => {
             style={{
               color: color,
               fontSize: size,
-              fontWeight: "700",
-              fontFamily: "OpenSansMedium",
+              // fontWeight: "700",
+              fontFamily: FONTS.bold,
             }}
           >
             {value}

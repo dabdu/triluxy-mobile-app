@@ -18,7 +18,7 @@ const OnBoardingScreen = () => {
       >
         <Image
           source={gettingstarted}
-          style={{ height: 465, width: "100%" }}
+          style={{ height: 400, width: "100%" }}
           resizeMode="cover"
         />
         <View
@@ -51,7 +51,7 @@ const OnBoardingScreen = () => {
         <View style={{ width: "70%" }}>
           <SecBtn
             text={"Get Started"}
-            onBtnPress={() => navigation.navigate("WelcomeScreen")}
+            onBtnPress={() => navigation.navigate("RegisterScreen")}
           />
           <Text
             style={{

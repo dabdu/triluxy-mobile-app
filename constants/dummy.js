@@ -76,4 +76,87 @@ const hotels = [
     isFavorite: false,
   },
 ];
-export { hotels };
+
+const recentcars = [
+  {
+    id: "shhd6eyrf",
+    f_img:
+      "https://stockphoto.com/samples/MDIyMjE0NzQyMDAxMWY1YmNmYjBlZA==/MjIxMWY1YmNmYjBlZA==/blue-suv-car-with-sport-and-modern-design-parked-on-concrete-road-by-the-sea-at-sunset-in-the-evening-hybrid-and-electric-car-technology-concept-automotive-industry-headlamp.jpg&size=1024",
+    froLoc: "Abuja",
+    froDur: "Jun 21, 12PM",
+    toLoc: "Kagos",
+    toDur: "Jun 22, 6PM",
+  },
+  {
+    id: "shhdggt6ey65rf",
+    f_img:
+      "https://stockphoto.com/samples/MDIyMjE0NzQyMDAxMWY1YmNmYjBlZA==/MjIxMWY1YmNmYjBlZA==/blue-suv-car-with-sport-and-modern-design-parked-on-concrete-road-by-the-sea-at-sunset-in-the-evening-hybrid-and-electric-car-technology-concept-automotive-industry-headlamp.jpg&size=1024",
+    froLoc: "Abuja",
+    froDur: "Jun 21, 12PM",
+    toLoc: "Kagos",
+    toDur: "Jun 22, 6PM",
+  },
+];
+const cars = [
+  {
+    id: "shhd6eyrf",
+    name: "Ford SUV",
+    f_img:
+      "https://stockphoto.com/samples/MDIyMjE0NzQyMDAxMWY1YmNmYjBlZA==/MjIxMWY1YmNmYjBlZA==/blue-suv-car-with-sport-and-modern-design-parked-on-concrete-road-by-the-sea-at-sunset-in-the-evening-hybrid-and-electric-car-technology-concept-automotive-industry-headlamp.jpg&size=1024",
+    otherImages: [
+      "https://stockphoto.com/samples/NTM1MTI5MTUyMDAxMWY1YmNmYjBlZA==/MjIxMWY1YmNmYjBlZA==/selective-focus-of-handsome-man-and-curly-cheerful-woman-looking-at-camera-while-sitting-in-automobile-.jpg&size=1024",
+      "https://stockphoto.com/samples/MTI2NDAwMjAwMDAxMWY1YmNmYjBlZA==/MjIxMWY1YmNmYjBlZA==/interior-of-exclusive-car.jpg&size=1024",
+      "https://stockphoto.com/samples/MjM2Mzk1MjIyMDAxMWY1YmNmYjBlZA==/MjIxMWY1YmNmYjBlZA==/interior-of-beige-leather-new-car-with-sunlight.jpg&size=1024",
+      "https://stockphoto.com/samples/OTQ3NjkxMDYwMDAxMWY1YmNmYjBlZA==/MjIxMWY1YmNmYjBlZA==/smart-multimedia-system-for-automobile.jpg&size=1024",
+    ],
+    price: 23000,
+    features: ["Constitution Avenue|Non airport", "Enhanced cleaning"],
+    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    location: "Lagos State",
+    doors: 4,
+    passenger: 4,
+    user: 2,
+    isFavorite: true,
+  },
+  {
+    id: "shhd6ey7dyfgrf",
+    name: "Ford SUV",
+    f_img:
+      "https://stockphoto.com/samples/MDIyMjE0NzQyMDAxMWY1YmNmYjBlZA==/MjIxMWY1YmNmYjBlZA==/blue-suv-car-with-sport-and-modern-design-parked-on-concrete-road-by-the-sea-at-sunset-in-the-evening-hybrid-and-electric-car-technology-concept-automotive-industry-headlamp.jpg&size=1024",
+    otherImages: [
+      "https://stockphoto.com/samples/NTM1MTI5MTUyMDAxMWY1YmNmYjBlZA==/MjIxMWY1YmNmYjBlZA==/selective-focus-of-handsome-man-and-curly-cheerful-woman-looking-at-camera-while-sitting-in-automobile-.jpg&size=1024",
+      "https://stockphoto.com/samples/MTI2NDAwMjAwMDAxMWY1YmNmYjBlZA==/MjIxMWY1YmNmYjBlZA==/interior-of-exclusive-car.jpg&size=1024",
+      "https://stockphoto.com/samples/MjM2Mzk1MjIyMDAxMWY1YmNmYjBlZA==/MjIxMWY1YmNmYjBlZA==/interior-of-beige-leather-new-car-with-sunlight.jpg&size=1024",
+      "https://stockphoto.com/samples/OTQ3NjkxMDYwMDAxMWY1YmNmYjBlZA==/MjIxMWY1YmNmYjBlZA==/smart-multimedia-system-for-automobile.jpg&size=1024",
+    ],
+    price: 23000,
+    features: ["Constitution Avenue|Non airport", "Enhanced cleaning"],
+    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    location: "Lagos State",
+    doors: 4,
+    passenger: 4,
+    user: 2,
+    isFavorite: true,
+  },
+  {
+    id: "sh5654hd6eyrf",
+    name: "Ford SUV",
+    f_img:
+      "https://stockphoto.com/samples/MDIyMjE0NzQyMDAxMWY1YmNmYjBlZA==/MjIxMWY1YmNmYjBlZA==/blue-suv-car-with-sport-and-modern-design-parked-on-concrete-road-by-the-sea-at-sunset-in-the-evening-hybrid-and-electric-car-technology-concept-automotive-industry-headlamp.jpg&size=1024",
+    otherImages: [
+      "https://stockphoto.com/samples/NTM1MTI5MTUyMDAxMWY1YmNmYjBlZA==/MjIxMWY1YmNmYjBlZA==/selective-focus-of-handsome-man-and-curly-cheerful-woman-looking-at-camera-while-sitting-in-automobile-.jpg&size=1024",
+      "https://stockphoto.com/samples/MTI2NDAwMjAwMDAxMWY1YmNmYjBlZA==/MjIxMWY1YmNmYjBlZA==/interior-of-exclusive-car.jpg&size=1024",
+      "https://stockphoto.com/samples/MjM2Mzk1MjIyMDAxMWY1YmNmYjBlZA==/MjIxMWY1YmNmYjBlZA==/interior-of-beige-leather-new-car-with-sunlight.jpg&size=1024",
+      "https://stockphoto.com/samples/OTQ3NjkxMDYwMDAxMWY1YmNmYjBlZA==/MjIxMWY1YmNmYjBlZA==/smart-multimedia-system-for-automobile.jpg&size=1024",
+    ],
+    price: 23000,
+    features: ["Constitution Avenue|Non airport", "Enhanced cleaning"],
+    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    location: "Lagos State",
+    doors: 4,
+    passenger: 4,
+    user: 2,
+    isFavorite: true,
+  },
+];
+export { hotels, recentcars, cars };

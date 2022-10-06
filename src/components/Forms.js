@@ -1,14 +1,20 @@
-import { View, Text, TouchableOpacity, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  ActivityIndicator,
+} from "react-native";
 import { colors, SIZES } from "../../constants/theme";
 export const CustomInput = () => {
   return <View></View>;
 };
-export const PrimaryBtn = ({ text }) => {
+export const PrimaryBtn = ({ text, onBtnPress }) => {
   return (
     <TouchableOpacity
       style={{
-        width: "100%",
-        backgroundColor: colors.primary,
+        // width: "100%",
+        backgroundColor: colors.darkPrimary,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
@@ -17,8 +23,15 @@ export const PrimaryBtn = ({ text }) => {
         marginVertical: 10,
         fontFamily: "OpenSansExtraBold",
       }}
+      onPress={onBtnPress}
     >
-      <Text style={{ color: "white", fontSize: 20, fontWeight: "700" }}>
+      <Text
+        style={{
+          color: "white",
+          fontSize: 15,
+          fontWeight: "700",
+        }}
+      >
         {text}
       </Text>
     </TouchableOpacity>
@@ -52,6 +65,64 @@ export const SecBtn = ({ text, onBtnPress }) => {
     </TouchableOpacity>
   );
 };
+export const OutlinedSecBtn = ({ text, onBtnPress }) => {
+  return (
+    <TouchableOpacity
+      style={{
+        // width: "100%",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        paddingVertical: 15,
+        borderRadius: 15,
+        marginVertical: 10,
+        fontFamily: "OpenSansExtraBold",
+        backgroundColor: "white",
+        borderColor: colors.secondary,
+        borderWidth: 1,
+      }}
+      onPress={onBtnPress}
+    >
+      <Text
+        style={{
+          color: colors.secondary,
+          fontSize: 16,
+          fontWeight: "800",
+        }}
+      >
+        {text}
+      </Text>
+    </TouchableOpacity>
+  );
+};
+export const LoadingBtn = () => {
+  return (
+    <TouchableOpacity
+      style={{
+        // width: "100%",
+        backgroundColor: colors.secondary,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        paddingVertical: 15,
+        borderRadius: 15,
+        marginVertical: 10,
+        fontFamily: "OpenSansExtraBold",
+      }}
+      disabled
+    >
+      {/* <Text
+        style={{
+          color: "white",
+          fontSize: 15,
+          fontWeight: "700",
+        }}
+      > */}
+      <ActivityIndicator color={"white"} />
+      {/* </Text> */}
+    </TouchableOpacity>
+  );
+};
 
 export const InputField = ({
   value,
@@ -60,9 +131,9 @@ export const InputField = ({
   Icon,
   iconName,
   type,
-  background,
   noBorder,
   color,
+  password,
 }) => {
   return (
     <View style={{ width: "100%", position: "relative", marginVertical: 5 }}>
@@ -87,9 +158,10 @@ export const InputField = ({
           fontWeight: "600",
           paddingLeft: 40,
           borderRadius: 10,
-          backgroundColor: background ? background : "",
+          backgroundColor: "white",
         }}
         keyboardType={type ? type : "default"}
+        secureTextEntry={password ? true : false}
       />
     </View>
   );

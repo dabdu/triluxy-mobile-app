@@ -1,12 +1,31 @@
 import { View, Text, FlatList, ScrollView } from "react-native";
-import React from "react";
-import { Header, ListItem, SubHeader } from "../../components";
+import React, { useEffect, useState } from "react";
+import {
+  Header,
+  ListItem,
+  SubHeader,
+  TransparentSpinner,
+} from "../../components";
 import { colors } from "../../../constants/theme";
 import { CountryItem } from "../../components/flight-components";
 import Footer from "../../components/Layouts/Footer";
-import { hotels } from "../../../constants/dummy";
+import { useAuthContext } from "../../../context/AuthContext";
+import { useNavigation } from "@react-navigation/native";
 
 const HotelHome = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const { authUser } = useAuthContext();
+  const navigation = useNavigation();
+  // useEffect(() => {
+  //   if (authUser?.userRole === "resAdmin") {
+  //     setIsLoading(true);
+  //     navigation.navigate("Home");
+  //     setIsLoading(false);
+  //   } else {
+  //     setIsLoading(false);
+  //   }
+  // }, []);
+  if (isLoading) return <TransparentSpinner />;
   return (
     <View style={{ width: "100%", height: "100%" }}>
       <Header
@@ -15,7 +34,7 @@ const HotelHome = () => {
         searchPath={"HotelSearchScreen"}
       />
 
-      <Footer active={"search"} searchPath={"HotelSearchScreen"} />
+      <Footer active={"search"} searchPath={"HotelHome"} />
     </View>
   );
 };

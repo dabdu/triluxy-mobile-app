@@ -5,26 +5,40 @@ import {
   FlatList,
   TextInput,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
-import { colors, FONTS, SHADOWS } from "../../../constants/theme";
-import { FontAwesome5, FontAwesome } from "@expo/vector-icons";
-import Footer from "../../components/Layouts/Footer";
+import { colors, FONTS, SHADOWS, SIZES } from "../../../constants/theme";
+import { FontAwesome, Entypo } from "@expo/vector-icons";
 import {
   CheckBox,
   FilterContainer,
   SearchResultHeader,
+  Spinner,
   SubHeader,
 } from "../../components";
-import { hotels } from "../../../constants/dummy";
-import { HotelVerticalItem } from "../../components/home-components";
+import { HotelVerticalItem } from "../../components/hotel-components";
 import { SecBtn } from "../../components/Forms";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { useHotelContext } from "../../../context/HotelContext";
 
 const SearchResult = () => {
+  const route = useRoute();
+  const { hotels } = useHotelContext();
+  const { searchedData } = route?.params;
+  const [cityHotels, setCityHotels] = useState([]);
   const [onFilter, setOnFilter] = useState(false);
   const [onFreeCancel, setOnFreeCancel] = useState(false);
   const [onHotel, setOnHotel] = useState(false);
+  const navigate = useNavigation();
+  const getSearchedCityHotel = async () => {
+    const tempHotels = await hotels.filter((i) => i.town === searchedData.city);
+    await setCityHotels(tempHotels);
+  };
 
+  useEffect(() => {
+    getSearchedCityHotel();
+  }, []);
+  // if (!cityHotels) return <Spinner />;
   return (
     <View>
       <View
@@ -34,14 +48,13 @@ const SearchResult = () => {
           width: "100%",
           backgroundColor: "white",
           paddingTop: 15,
-          // paddingHorizontal: 20,
           zIndex: 10,
         }}
       >
         <View style={{ flexDirection: "row" }}>
           <SearchResultHeader
-            head="Results"
-            body={"Jun 9-10 | 1 room | 1 Guest"}
+            head={searchedData?.city}
+            body={`${searchedData?.checkInDate} -- ${searchedData?.checkOutDate} | ${searchedData?.adult} Guest`}
           />
         </View>
         <View
@@ -100,31 +113,60 @@ const SearchResult = () => {
           </View>
         </View>
       </View>
-      <View style={{ backgroundColor: colors.bgGray }}>
-        <FlatList
-          data={hotels}
-          keyExtractor={(item) => item.id}
+      {cityHotels.length > 0 ? (
+        <View>
+          <FlatList
+            data={cityHotels}
+            keyExtractor={(item) => item._id}
+            style={{
+              marginTop: 140,
+              marginHorizontal: 20,
+              paddingTop: 20,
+            }}
+            ListHeaderComponent={
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: colors.darkPrimary,
+                  fontWeight: "700",
+                }}
+              >
+                Results(S)
+              </Text>
+            }
+            renderItem={({ item }) => (
+              <HotelVerticalItem data={item} searchedData={searchedData} />
+            )}
+            showsVerticalScrollIndicator={false}
+            ListFooterComponent={<View style={{ height: 40, width: "100%" }} />}
+          />
+        </View>
+      ) : (
+        <View
           style={{
-            marginTop: 140,
-            marginHorizontal: 20,
-            paddingTop: 20,
+            height: "100%",
+            marginHorizontal: 40,
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
           }}
-          ListHeaderComponent={
-            <Text
-              style={{
-                fontSize: 20,
-                color: colors.darkPrimary,
-                fontWeight: "700",
-              }}
-            >
-              24 Results(S)
-            </Text>
-          }
-          renderItem={({ item }) => <HotelVerticalItem data={item} />}
-          showsVerticalScrollIndicator={false}
-          ListFooterComponent={<View style={{ height: 40, width: "100%" }} />}
-        />
-      </View>
+        >
+          <Entypo name="emoji-sad" size={40} color="red" />
+          <Text
+            style={{
+              marginVertical: 20,
+              color: colors.darkPrimary,
+              fontSize: SIZES.medium,
+              textAlign: "center",
+            }}
+          >
+            We Don't Have Any Hotel in Your Searched Location
+          </Text>
+          <View style={{ width: "100%" }}>
+            <SecBtn onBtnPress={() => navigate.goBack()} text={"Go Back"} />
+          </View>
+        </View>
+      )}
       {/* Filter Container */}
       {onFilter && (
         <FilterContainer filter={onFilter} setFilter={setOnFilter}>

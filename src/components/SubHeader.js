@@ -4,7 +4,7 @@ import { FONTS, SIZES } from "../../constants/theme";
 
 const SubHeader = ({ text, color }) => {
   return (
-    <View>
+    <View style={{ marginVertical: 5 }}>
       <Text
         style={{ color: color, fontSize: SIZES.large, fontFamily: FONTS.bold }}
       >

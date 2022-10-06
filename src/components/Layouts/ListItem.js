@@ -5,10 +5,11 @@ const { width } = Dimensions.get("window");
 import { Shadow } from "react-native-shadow-2";
 import { colors, FONTS, SHADOWS, SIZES } from "../../../constants/theme";
 import { AntDesign } from "@expo/vector-icons";
+import MapMarker from "../MapMarker";
 
 const ListItem = ({ data }) => {
   const navigation = useNavigation();
-  const image = { uri: data.image };
+  const image = { uri: data.fImg };
   return (
     <View
       style={{
@@ -19,6 +20,7 @@ const ListItem = ({ data }) => {
         borderColor: "#939090",
         borderRadius: 10,
         ...SHADOWS.light,
+        zIndex: -1
       }}
     >
       <View
@@ -67,7 +69,7 @@ const ListItem = ({ data }) => {
               fontFamily: FONTS.bold,
             }}
           >
-            {data.name}
+            {data.hotelName}
           </Text>
 
           <View
@@ -78,18 +80,8 @@ const ListItem = ({ data }) => {
               marginBottom: 5,
             }}
           >
-            <Text
-              style={{
-                fontSize: SIZES.font,
-                fontWeight: "900",
-                color: colors.darkSecondary,
-                fontFamily: "OpenSansRegular",
-              }}
-            >
-              <Text style={{ fontSize: 12, fontWeight: "500" }}>From </Text>N
-              {data.price}
-            </Text>
-            <TouchableOpacity
+              <MapMarker location={data.state} />
+            {/* <TouchableOpacity
               style={{
                 flexDirection: "row",
                 alignItems: "center",
@@ -107,7 +99,7 @@ const ListItem = ({ data }) => {
                 Details
               </Text>
               <AntDesign name="right" size={12} color={colors.darkSecondary} />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
       </View>

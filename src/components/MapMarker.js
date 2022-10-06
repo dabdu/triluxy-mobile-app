@@ -9,8 +9,8 @@ const MapMarker = ({ location }) => {
       <MaterialCommunityIcons name="google-maps" size={24} color="red" />
       <Text
         style={{
-          fontSize: SIZES.medium,
-          fontFamily: FONTS.bold,
+          fontSize: SIZES.font,
+          fontFamily: FONTS.semiBold,
           color: colors.secondary,
         }}
       >

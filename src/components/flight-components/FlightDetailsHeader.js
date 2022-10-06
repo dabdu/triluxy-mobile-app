@@ -4,7 +4,7 @@ import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { colors, FONTS, SHADOWS, SIZES } from "../../../constants/theme";
 import { useNavigation } from "@react-navigation/native";
 
-const FlightDetailsHeader = ({ location, dates, type, text }) => {
+const FlightDetailsHeader = ({ location, dates, type, text, white }) => {
   const navigation = useNavigation();
   return (
     <View
@@ -13,7 +13,7 @@ const FlightDetailsHeader = ({ location, dates, type, text }) => {
         justifyContent: "space-between",
         alignItems: "center",
         width: "100%",
-        backgroundColor: colors.secondary,
+        backgroundColor: white ? "white" : colors.secondary,
         paddingHorizontal: 20,
         paddingVertical: 8,
         borderTopColor: "#a3d4fe",
@@ -30,7 +30,11 @@ const FlightDetailsHeader = ({ location, dates, type, text }) => {
       >
         {/* Icon */}
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <AntDesign name="left" size={27} color={"white"} />
+          <AntDesign
+            name="left"
+            size={27}
+            color={white ? colors.secondary : "white"}
+          />
         </TouchableOpacity>
         {type ? (
           <Text
@@ -38,7 +42,7 @@ const FlightDetailsHeader = ({ location, dates, type, text }) => {
               marginLeft: 5,
               fontFamily: FONTS.semiBold,
               fontSize: SIZES.medium,
-              color: "white",
+              color: white ? colors.secondary : "white",
             }}
           >
             {text}
@@ -51,10 +55,10 @@ const FlightDetailsHeader = ({ location, dates, type, text }) => {
           >
             <Text
               style={{
-                color: "white",
                 fontWeight: "500",
                 fontSize: SIZES.large,
                 fontFamily: FONTS.semiBold,
+                color: white ? colors.secondary : "white",
               }}
             >
               {location}

@@ -9,6 +9,8 @@ export const colors = {
   darkSecondary: "#1D97C1",
   bgGray: "#e6e6e6",
   darkGray: "#c4c2c2",
+  successColor: "#01DB73",
+  errorColor: "#bf0603",
 };
 
 export const fonts = {
@@ -72,9 +74,9 @@ export const SHADOWS = {
 import image1 from "./images/image1.png";
 import logo from "./images/logo.png";
 import gettingstarted from "./images/gettingstarted.png";
-import headerImg from "./images/headerImg.png";
+import homeImg from "./images/homeImg.png";
 
-export { image1, logo, gettingstarted, headerImg };
+export { image1, logo, gettingstarted, homeImg };
 
 export const CustomInput = {
   width: "100%",
