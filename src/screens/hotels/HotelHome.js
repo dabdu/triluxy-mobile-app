@@ -13,9 +13,7 @@ import { useAuthContext } from "../../../context/AuthContext";
 import { useNavigation } from "@react-navigation/native";
 
 const HotelHome = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const { authUser } = useAuthContext();
-  const navigation = useNavigation();
+  const [isLoading] = useState(false);
   // useEffect(() => {
   //   if (authUser?.userRole === "resAdmin") {
   //     setIsLoading(true);

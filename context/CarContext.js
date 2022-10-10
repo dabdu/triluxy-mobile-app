@@ -20,6 +20,8 @@ const CarContextProvider = ({ children }) => {
   const [travelPrice, setTravelPrice] = useState(null);
   const [availableCars, setAvailableCars] = useState(null);
   const [pickupCity, setPickupCity] = useState(null);
+  const [rentorBookings, setRentorBookings] = useState(null);
+  const [bookings, setBookings] = useState(null);
   const { authUser } = useAuthContext();
   useEffect(() => {
     (async () => {
@@ -44,7 +46,6 @@ const CarContextProvider = ({ children }) => {
     })();
   }, [authUser]);
   useEffect(() => {}, []);
-  // console.log(availableCars);
   return (
     <CarContext.Provider
       value={{
@@ -63,6 +64,10 @@ const CarContextProvider = ({ children }) => {
         setTravelPrice,
         pickupCity,
         setPickupCity,
+        rentorBookings,
+        setRentorBookings,
+        bookings,
+        setBookings,
       }}
     >
       {children}

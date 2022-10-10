@@ -10,7 +10,7 @@ import {
 } from "../../components";
 import { PrimaryBtn, SecBtn } from "../../components/Forms";
 import { colors, FONTS, SIZES } from "../../../constants/theme";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { containerLight } from "../../../constants/layouts";
 import { getWordDate } from "../../../constants/functions";
 import baseURL from "../../../constants/baseURL";
@@ -20,7 +20,7 @@ import { useAuthContext } from "../../../context/AuthContext";
 const BookedDetails = () => {
   const [car, setCar] = useState(null);
   const route = useRoute();
-  const { data } = route?.params;
+  const { data, user } = route?.params;
   const navigation = useNavigation();
   const {
     carId,
@@ -58,7 +58,7 @@ const BookedDetails = () => {
     fetchData();
   }, []);
   if (car === null) return <TransparentSpinner />;
-  console.log(data);
+  console.log(user);
   return (
     <ScrollView>
       <View
@@ -71,6 +71,62 @@ const BookedDetails = () => {
           paddingHorizontal: 30,
         }}
       >
+        {/* User Details */}
+        {user && (
+          <View
+            style={[
+              containerLight,
+
+              {
+                paddingVertical: 10,
+                paddingHorizontal: 20,
+              },
+            ]}
+          >
+            <Text
+              style={{
+                fontFamily: FONTS.semiBold,
+                fontSize: SIZES.medium,
+                color: colors.primary,
+                paddingVertical: 10,
+              }}
+            >
+              User's{" "}
+              <AntDesign name="user" size={24} color={colors.secondary} />{" "}
+              Details
+            </Text>
+            <LineDivider />
+            <View
+              style={{
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                paddingVertical: 10,
+                // alignItems: "center",
+              }}
+            >
+              <View>
+                <View style={{ marginVertical: 2 }}>
+                  <Text style={styles.textTitle}>Name:</Text>
+                  <Text style={styles.textSub}>{user?.name}</Text>
+                </View>
+                <View style={{ marginVertical: 2 }}>
+                  <Text style={styles.textTitle}>Email:</Text>
+                  <Text style={styles.textSub}>{user?.email}</Text>
+                </View>
+                <View style={{ marginVertical: 2 }}>
+                  <Text style={styles.textTitle}>Phone No:</Text>
+                  <Text style={styles.textSub}>{user?.phoneNumber}</Text>
+                </View>
+              </View>
+              <Image
+                source={{ uri: user?.profileImg }}
+                style={{ height: 120, width: 120, borderRadius: 999 }}
+              />
+            </View>
+          </View>
+        )}
+
         {/* Car Details */}
         <View
           style={[
@@ -131,10 +187,10 @@ const BookedDetails = () => {
           />
         </View>
         {/* Booking Details */}
-        {/* Pickup and Return Date */}
         <View style={containerLight}>
           <SubHeader text={"Booking Details"} />
           <LineDivider />
+          {/* Pickup and Return Date */}
           <View>
             <View
               style={{
@@ -245,6 +301,21 @@ const BookedDetails = () => {
                 {status}
               </Text>
             </View>
+            <Text
+              style={{
+                fontStyle: "italic",
+                textAlign: "center",
+                fontSize: SIZES.small,
+                color: colors.gray,
+                fontFamily: FONTS.semiBold,
+              }}
+            >
+              {status === "BOOKED"
+                ? "Awaiting Your Comfirmation"
+                : status === "CONFIRMED"
+                ? "Awaiting User's Pick Up"
+                : ""}
+            </Text>
           </View>
         </View>
       </View>
@@ -253,4 +324,15 @@ const BookedDetails = () => {
 };
 
 export default BookedDetails;
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  textTitle: {
+    fontFamily: FONTS.semiBold,
+    fontSize: SIZES.medium,
+    color: colors.darkSecondary,
+  },
+  textSub: {
+    fontFamily: FONTS.semiBold,
+    fontSize: SIZES.small,
+    color: "gray",
+  },
+});

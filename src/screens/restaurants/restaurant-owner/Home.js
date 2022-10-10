@@ -34,7 +34,7 @@ const Home = () => {
   //     };
   //     axios
   //       .get(
-  //         `${baseURL}/restaurant/admin/res/reservations/${currentRestaurant?._id}`,
+  //         `${baseURL}/restaurant/reservations/restaurant/${currentRestaurant?._id}`,
   //         config
   //       )
   //       .then((res) => {

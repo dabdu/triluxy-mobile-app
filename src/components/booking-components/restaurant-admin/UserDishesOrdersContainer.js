@@ -1,29 +1,23 @@
 import { View, Text, FlatList } from "react-native";
 import React from "react";
-import { UserBookingItem } from "./";
-import NoResult from "../../NoResult";
-import { colors, FONTS, SIZES } from "../../../../constants/theme";
+import RestaurantBookingItem from "./RestaurantBookingItem";
+import NoResult from "../NoResult";
+import { colors, FONTS, SIZES } from "../../../constants/theme";
+import DishesItem from "./DishesItem";
 
-const UserBookingContainer = ({ data, tab, isLoading, setIsLoading }) => {
-  const bookings =
+const UserDishesOrdersContainer = ({ data, tab }) => {
+  const orders =
     tab === "new"
-      ? data?.filter((item) => item.status !== "CHECKEDOUT")
-      : data?.filter((item) => item.status === "CHECKEDOUT");
-  console.log(bookings);
+      ? data?.filter((item) => item.status != "COMPLETED")
+      : data?.filter((item) => item.status === "COMPLETED");
   return (
     <View style={{ height: "100%", width: "100%", backgroundColor: "white" }}>
-      {data?.length > 0 ? (
+      {orders?.length > 0 ? (
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={data}
+          data={orders}
           keyExtractor={(item) => item._id}
-          renderItem={({ item }) => (
-            <UserBookingItem
-              data={item}
-              isLoading={isLoading}
-              setIsLoading={setIsLoading}
-            />
-          )}
+          renderItem={({ item }) => <DishesItem data={item} />}
           ListHeaderComponent={
             <Text
               style={{
@@ -32,7 +26,7 @@ const UserBookingContainer = ({ data, tab, isLoading, setIsLoading }) => {
                 fontSize: SIZES.large,
               }}
             >
-              Bookings
+              Orders
             </Text>
           }
           style={{ marginHorizontal: 20, marginVertical: 25 }}
@@ -42,8 +36,8 @@ const UserBookingContainer = ({ data, tab, isLoading, setIsLoading }) => {
         <NoResult
           text={`${
             tab === "new"
-              ? "You Have No New Reservation"
-              : "You Have No Previous Reservations"
+              ? "You Have No New Dishes Ordered"
+              : "You Have No Previous Orders"
           }`}
         />
       )}
@@ -51,4 +45,4 @@ const UserBookingContainer = ({ data, tab, isLoading, setIsLoading }) => {
   );
 };
 
-export default UserBookingContainer;
+export default UserDishesOrdersContainer;

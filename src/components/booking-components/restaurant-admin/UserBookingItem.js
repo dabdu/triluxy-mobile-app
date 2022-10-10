@@ -3,10 +3,12 @@ import React from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import FormatedNumber from "../../FormatedNumber";
 import { colors, FONTS, SIZES } from "../../../../constants/theme";
+import { useRestaurantContext } from "../../../../context/RestaurantContext";
+import { containerDark, containerMedium } from "../../../../constants/layouts";
 import { getWordDate } from "../../../../constants/functions";
-import { containerDark } from "../../../../constants/layouts";
+import { useNavigation } from "@react-navigation/native";
 
 const UserBookingItem = ({ data }) => {
   const [user, setUser] = useState({});

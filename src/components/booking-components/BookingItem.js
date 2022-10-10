@@ -3,15 +3,19 @@ import React from "react";
 import { colors, FONTS, SHADOWS, SIZES } from "../../../constants/theme";
 import { useNavigation } from "@react-navigation/native";
 
-const BookingItem = ({ Icon, iconName, text, path }) => {
+const BookingItem = ({ Icon, iconName, text, path, color, status }) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => navigation.navigate(path)}
+      onPress={() => navigation.navigate(path, { status })}
     >
       <View>
-        <Icon name={iconName} size={24} color={colors.secondary} />
+        <Icon
+          name={iconName}
+          size={24}
+          color={color ? color : colors.secondary}
+        />
       </View>
       <Text
         style={{

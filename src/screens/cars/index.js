@@ -4,6 +4,9 @@ import CarInfoScreen from "./CarInfoScreen";
 import CarPaymentScreen from "./CarPaymentScreen";
 import CarSearchResult from "./CarSearchResult";
 import CarSearchScreen from "./CarSearchScreen";
+import CarManageBookings from "./rentor/CarManageBookings";
+import FilterCarBooking from "./rentor/FilterCarBooking";
+import RentorHome from "./rentor/RentorHome";
 
 export {
   CarHome,
@@ -12,4 +15,7 @@ export {
   CarDetailsScreen,
   CarPaymentScreen,
   CarInfoScreen,
+  RentorHome,
+  CarManageBookings,
+  FilterCarBooking,
 };

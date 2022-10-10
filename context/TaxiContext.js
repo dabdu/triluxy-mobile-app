@@ -52,7 +52,6 @@ const TaxiContextProvider = ({ children }) => {
       }
     })();
   }, [authUser]);
-  useEffect(() => {}, []);
   return (
     <TaxiContext.Provider
       value={{

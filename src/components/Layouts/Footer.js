@@ -13,7 +13,7 @@ import { useAuthContext } from "../../../context/AuthContext";
 const Footer = ({ active, searchPath }) => {
   const navigation = useNavigation();
   const { authUser } = useAuthContext();
-  const { userRole } = authUser;
+  // const { authUser?.userRole } = authUser;
   const newPath = searchPath ? searchPath : "FlightSearchScreen";
   return (
     <View
@@ -30,7 +30,7 @@ const Footer = ({ active, searchPath }) => {
       }}
     >
       {/* User Only MEnu Items  */}
-      {userRole === "User" && (
+      {authUser?.userRole === "User" && (
         <>
           <TouchableOpacity
             style={styles.iconContainer}
@@ -77,7 +77,7 @@ const Footer = ({ active, searchPath }) => {
         </>
       )}
       {/* Restaurant Admin Only MEnu Items  */}
-      {userRole === "resAdmin" && (
+      {authUser?.userRole === "resAdmin" && (
         <>
           <TouchableOpacity
             style={styles.iconContainer}
@@ -123,6 +123,84 @@ const Footer = ({ active, searchPath }) => {
               ]}
             >
               Orders
+            </Text>
+          </TouchableOpacity>
+          {/* <TouchableOpacity
+            style={styles.iconContainer}
+            onPress={() => navigation.navigate("ManageBooking")}
+          >
+            <Ionicons
+              name="restaurant-outline"
+              size={24}
+              color={active === "my-res" ? colors.primary : colors.secondary}
+            />
+            <Text
+              style={[
+                styles.text,
+                {
+                  color:
+                    active === "my-res" ? colors.primary : colors.secondary,
+                },
+              ]}
+            >
+              My Restaurant
+            </Text>
+          </TouchableOpacity> */}
+        </>
+      )}
+      {/* Car Rentor Only MEnu Items  */}
+      {authUser?.userRole === "carRentor" && (
+        <>
+          <TouchableOpacity
+            style={styles.iconContainer}
+            onPress={() => navigation.navigate("CarRentorHome")}
+          >
+            <Ionicons
+              name="home-outline"
+              size={24}
+              color={
+                active === "car-rentor-home" ? colors.primary : colors.secondary
+              }
+            />
+            <Text
+              style={[
+                styles.text,
+                {
+                  color:
+                    active === "car-rentor-home"
+                      ? colors.primary
+                      : colors.secondary,
+                },
+              ]}
+            >
+              Home
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.iconContainer}
+            onPress={() => navigation.navigate("CarManageBookings")}
+          >
+            <MaterialCommunityIcons
+              name="briefcase-outline"
+              size={24}
+              color={
+                active === "car-rentor-bookings"
+                  ? colors.primary
+                  : colors.secondary
+              }
+            />
+            <Text
+              style={[
+                styles.text,
+                {
+                  color:
+                    active === "car-rentor-bookings"
+                      ? colors.primary
+                      : colors.secondary,
+                },
+              ]}
+            >
+              Bookings
             </Text>
           </TouchableOpacity>
           {/* <TouchableOpacity

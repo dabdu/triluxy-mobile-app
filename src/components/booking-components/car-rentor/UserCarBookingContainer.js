@@ -1,24 +1,24 @@
 import { View, Text, FlatList } from "react-native";
 import React from "react";
-import { UserBookingItem } from "./";
 import NoResult from "../../NoResult";
 import { colors, FONTS, SIZES } from "../../../../constants/theme";
+import { UserCarBookingItem } from "./";
 
-const UserBookingContainer = ({ data, tab, isLoading, setIsLoading }) => {
+const UserCarBookingContainer = ({ data, tab, isLoading, setIsLoading }) => {
   const bookings =
     tab === "new"
-      ? data?.filter((item) => item.status !== "CHECKEDOUT")
-      : data?.filter((item) => item.status === "CHECKEDOUT");
-  console.log(bookings);
+      ? data?.filter((item) => item.status === "BOOKED")
+      : data?.filter((item) => item.status === "RETURNED");
+  console.log(data);
   return (
     <View style={{ height: "100%", width: "100%", backgroundColor: "white" }}>
-      {data?.length > 0 ? (
+      {bookings?.length > 0 ? (
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={data}
+          data={bookings}
           keyExtractor={(item) => item._id}
           renderItem={({ item }) => (
-            <UserBookingItem
+            <UserCarBookingItem
               data={item}
               isLoading={isLoading}
               setIsLoading={setIsLoading}
@@ -35,15 +35,15 @@ const UserBookingContainer = ({ data, tab, isLoading, setIsLoading }) => {
               Bookings
             </Text>
           }
-          style={{ marginHorizontal: 20, marginVertical: 25 }}
+          style={{ marginHorizontal: 10, marginVertical: 25 }}
           ListFooterComponent={<View style={{ height: 100, width: "100%" }} />}
         />
       ) : (
         <NoResult
           text={`${
             tab === "new"
-              ? "You Have No New Reservation"
-              : "You Have No Previous Reservations"
+              ? "You Have No New Request"
+              : "You Have No Previous Requests"
           }`}
         />
       )}
@@ -51,4 +51,4 @@ const UserBookingContainer = ({ data, tab, isLoading, setIsLoading }) => {
   );
 };
 
-export default UserBookingContainer;
+export default UserCarBookingContainer;

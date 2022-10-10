@@ -32,9 +32,12 @@ import {
   CarDetailsScreen,
   CarHome,
   CarInfoScreen,
+  CarManageBookings,
   CarPaymentScreen,
   CarSearchResult,
   CarSearchScreen,
+  FilterCarBooking,
+  RentorHome,
 } from "../screens/cars";
 import {
   BankTransferScreen,
@@ -72,7 +75,13 @@ const AppStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName={authUser?.userRole === "User" ? "HotelHome" : "Home"}
+      initialRouteName={
+        authUser?.userRole === "User"
+          ? "HotelHome"
+          : authUser?.userRole === "carRentor"
+          ? "CarRentorHome"
+          : "Home"
+      }
     >
       {/* Flight Screens Ends Here */}
       <Stack.Screen name="FlightHome" component={FlightHome} />
@@ -105,6 +114,39 @@ const AppStack = () => {
           headerShown: true,
           headerBackTitle: false,
           headerTitle: "Car Info",
+          headerTintColor: "white",
+          headerStyle: { backgroundColor: colors.secondary },
+        }}
+      />
+      <Stack.Screen
+        name="CarRentorHome"
+        component={RentorHome}
+        options={{
+          headerShown: true,
+          headerBackTitle: false,
+          headerTitle: "Car Requests",
+          headerTintColor: "white",
+          headerStyle: { backgroundColor: colors.secondary },
+        }}
+      />
+      <Stack.Screen
+        name="CarManageBookings"
+        component={CarManageBookings}
+        options={{
+          headerShown: true,
+          headerBackTitle: false,
+          headerTitle: "Manage Bookings",
+          headerTintColor: "white",
+          headerStyle: { backgroundColor: colors.secondary },
+        }}
+      />
+      <Stack.Screen
+        name="FilterCarBooking"
+        component={FilterCarBooking}
+        options={{
+          headerShown: true,
+          headerBackTitle: false,
+          headerTitle: "Manage Bookings",
           headerTintColor: "white",
           headerStyle: { backgroundColor: colors.secondary },
         }}

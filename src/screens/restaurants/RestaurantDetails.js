@@ -75,7 +75,10 @@ const RestaurantDetails = ({}) => {
           });
           setTimeout(() => {
             setBtnLoading(false);
-            navigation.navigate("ManageBooking");
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "ManageBookings" }],
+            });
           }, 1500);
         }
       })

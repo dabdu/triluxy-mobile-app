@@ -5,12 +5,12 @@ import { useAuthContext } from "../../../context/AuthContext";
 import axios from "axios";
 import baseURL from "../../../constants/baseURL";
 import { CarBookingContainer } from "../../components/booking-components";
+import { useCarContext } from "../../../context/CarContext";
 
 const ManageCarRentals = () => {
   const [onNew, setOnNew] = useState(true);
   const [onPrevious, setOnPrevious] = useState(false);
-  const [bookings, setBookings] = useState(null);
-
+  const { bookings, setBookings } = useCarContext();
   const { authUser } = useAuthContext();
   const config = {
     headers: {
