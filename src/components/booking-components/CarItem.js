@@ -206,7 +206,9 @@ const CarItem = ({ data }) => {
           ? "Awaiting Your Pick Up"
           : status === "PICKEDUP"
           ? "Awaiting Your return"
-          : ""}
+          : status === "RETURNED"
+          ? "Ordered Completed, You booked, picked up and returned a Car"
+          : "Your Booking was rejected"}
       </Text>
     </TouchableOpacity>
   );

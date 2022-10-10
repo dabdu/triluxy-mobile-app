@@ -30,6 +30,7 @@ const UserCarBookingItem = ({ data }) => {
     returnDate,
     days,
     userId,
+    carId,
   } = data;
   const config = {
     headers: {
@@ -128,9 +129,10 @@ const UserCarBookingItem = ({ data }) => {
       id: _id,
       userEmail: user?.email,
       carOwnerEmail: authUser?.email,
+      carId,
     };
     axios
-      .put(`${baseURL}/car/rentor/return`, Data, config)
+      .put(`${baseURL}/car/rentor/returned`, Data, config)
       .then((res) => {
         if (res.status == 201) {
           Toast.show({
@@ -215,8 +217,24 @@ const UserCarBookingItem = ({ data }) => {
                 pickupDate
               )} and expected to be returned on ${getWordDate(returnDate)}.`}
             </Text>
+          ) : status === "PICKEDUP" ? (
+            <Text style={{ fontFamily: FONTS.semiBold, fontSize: 15 }}>
+              {`${user?.name} picked up your car he rented on ${getWordDate(
+                pickupDate
+              )} and expected to be returned on ${getWordDate(returnDate)}.`}
+            </Text>
+          ) : status === "RETURNED" ? (
+            <Text style={{ fontFamily: FONTS.semiBold, fontSize: 15 }}>
+              {`${user?.name} rented your car on ${getWordDate(
+                pickupDate
+              )} returned on ${getWordDate(returnDate)} in Good Condition.`}
+            </Text>
           ) : (
-            <Text></Text>
+            <Text style={{ fontFamily: FONTS.semiBold, fontSize: 15 }}>
+              {`Your Decline the request of Car wanted to be rented by${
+                user?.name
+              } on ${getWordDate(pickupDate)}.`}
+            </Text>
           )}
           <Text
             style={{
@@ -307,16 +325,6 @@ const UserCarBookingItem = ({ data }) => {
             </Text>
           ) : status === "PICKEDUP" ? (
             <>
-              {/* <Text
-                style={[
-                  styles.badgeCont,
-                  {
-                    backgroundColor: colors.primary,
-                  },
-                ]}
-              >
-                {"PICKED UP"}
-              </Text> */}
               <TouchableOpacity
                 style={{
                   backgroundColor: colors.successColor,
@@ -342,8 +350,28 @@ const UserCarBookingItem = ({ data }) => {
                 </Text>
               </TouchableOpacity>
             </>
+          ) : status === "RETURNED" ? (
+            <Text
+              style={[
+                styles.badgeCont,
+                {
+                  backgroundColor: colors.successColor,
+                },
+              ]}
+            >
+              {"RETURNED & CONFIRMED"}
+            </Text>
           ) : (
-            <Text></Text>
+            <Text
+              style={[
+                styles.badgeCont,
+                {
+                  backgroundColor: colors.errorColor,
+                },
+              ]}
+            >
+              {"DECLINED"}
+            </Text>
           )}
         </View>
       </View>
@@ -362,6 +390,8 @@ const UserCarBookingItem = ({ data }) => {
           ? "Awaiting User's Pick Up"
           : status === "PICKEDUP"
           ? "Car Picked Up, Awaiting User's return"
+          : status === "RETURNED"
+          ? "Car Request completed, booked, Picked and Returned"
           : ""}
       </Text>
     </TouchableOpacity>

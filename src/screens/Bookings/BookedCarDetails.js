@@ -310,11 +310,11 @@ const BookedDetails = () => {
                 fontFamily: FONTS.semiBold,
               }}
             >
-              {status === "BOOKED"
+              {/* {status === "BOOKED"
                 ? "Awaiting Your Comfirmation"
                 : status === "CONFIRMED"
                 ? "Awaiting User's Pick Up"
-                : ""}
+                : ""} */}
             </Text>
           </View>
         </View>

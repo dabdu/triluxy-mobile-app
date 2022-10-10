@@ -49,7 +49,7 @@ const FilterCarBooking = () => {
               ? "New"
               : status === "CONFIRMED"
               ? "Accepted"
-              : status === "PICKED"
+              : status === "PICKEDUP"
               ? "Current"
               : status === "REJECTED"
               ? "Rejected"
