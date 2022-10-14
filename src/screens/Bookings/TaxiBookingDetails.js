@@ -10,7 +10,7 @@ import {
 } from "../../components";
 import { PrimaryBtn, SecBtn } from "../../components/Forms";
 import { colors, FONTS, SIZES } from "../../../constants/theme";
-import { Ionicons, Fontisto } from "@expo/vector-icons";
+import { AntDesign, Fontisto } from "@expo/vector-icons";
 import { containerLight } from "../../../constants/layouts";
 import { getWordDate } from "../../../constants/functions";
 import baseURL from "../../../constants/baseURL";
@@ -19,9 +19,9 @@ import { useAuthContext } from "../../../context/AuthContext";
 
 const TaxiBookingDetails = () => {
   const [car, setCar] = useState(null);
+  const [user, setUser] = useState(null);
   const route = useRoute();
   const { data } = route?.params;
-  const navigation = useNavigation();
   const {
     _id,
     amount,
@@ -29,45 +29,54 @@ const TaxiBookingDetails = () => {
     categoryId,
     createdAt,
     destDesc,
-    destLat,
-    destLng,
     originDesc,
-    originLat,
-    originLng,
     pickupDate,
     pickupTime,
     status,
-    transactionId,
-    transactionRef,
     userId,
   } = data;
   const { authUser } = useAuthContext();
-  console.log(data);
-  // useEffect(() => {
-  //   const config = {
-  //     headers: {
-  //       Authorization: `Bearer ${authUser?.token}`,
-  //     },
-  //   };
-  //   const fetchData = async () => {
-  //     await axios
-  //       .get(`${baseURL}/taxi/details/${carId}`, config)
-  //       .then((res) => {
-  //         setCar(res.data);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //     return () => {
-  //       setCar({});
-  //     };
-  //   };
-  //   fetchData();
-  // }, []);
-  // if (car === null) return <TransparentSpinner />;
-  console.log(data);
+  useEffect(() => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${authUser?.token}`,
+      },
+    };
+    const fetchData = async () => {
+      await axios
+        .get(`${baseURL}/taxi/details/${assignedCarId}`, config)
+        .then(async (res) => {
+          setCar(res.data);
+          // if (status === 200) {
+          let searchedId =
+            authUser?.userRole === "taxiDriver"
+              ? data?.userId
+              : res.data?.userId;
+          console.log(data?.userId);
+          await axios
+            .get(`${baseURL}/user/user/${searchedId}`, config)
+            .then((res) => {
+              setUser(res.data);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+          // }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      return () => {
+        setUser({});
+        setCar({});
+      };
+    };
+    fetchData();
+  }, []);
+  if (car === null || user === null) return <TransparentSpinner />;
+  console.log(user);
   return (
-    <ScrollView>
+    <ScrollView style={{ paddingVertical: 20 }}>
       <View
         style={{
           flex: 1,
@@ -78,66 +87,155 @@ const TaxiBookingDetails = () => {
           paddingHorizontal: 30,
         }}
       >
-        {/* Car Details */}
-        <View
-          style={[
-            containerLight,
+        {authUser?.userRole === "taxiDriver" ? (
+          <View
+            style={[
+              containerLight,
 
-            {
-              paddingVertical: 10,
-              paddingHorizontal: 20,
-            },
-          ]}
-        >
-          <Text
-            style={{
-              fontFamily: FONTS.semiBold,
-              fontSize: SIZES.medium,
-              color: colors.primary,
-              paddingVertical: 10,
-            }}
+              {
+                paddingVertical: 10,
+                paddingHorizontal: 20,
+              },
+            ]}
           >
-            Taxi <Fontisto name="taxi" size={24} color={colors.secondary} />{" "}
-            Details
-          </Text>
-          <LineDivider />
-          {assignedCarId === "" ? (
-            <Text>You Haven't Been Assigned Taxi Driver</Text>
-          ) : (
-            <>
-              <View
-                style={{
-                  flexDirection: "row-reverse",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  width: "100%",
-                }}
-              >
-                <Image
-                  source={{ uri: car?.carImages[0] }}
-                  style={{
-                    height: 100,
-                    width: 100,
-                    borderRadius: 30,
-                    marginVertical: 10,
-                  }}
-                />
-                <View>
-                  <SubHeader text={car?.carName} color={colors.primary} />
-                  <Text>Model: {`${car?.carModel}`}</Text>
-                  <Text>Color: {car?.carColor}</Text>
-                  <Text>Plate Number: {car?.plateNumber}</Text>
+            <Text
+              style={{
+                fontFamily: FONTS.semiBold,
+                fontSize: SIZES.medium,
+                color: colors.primary,
+                paddingVertical: 10,
+              }}
+            >
+              User's{" "}
+              <AntDesign name="user" size={24} color={colors.secondary} />{" "}
+              Details
+            </Text>
+            <LineDivider />
+            <View
+              style={{
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                paddingVertical: 10,
+                // alignItems: "center",
+              }}
+            >
+              <View>
+                <View style={{ marginVertical: 2 }}>
+                  <Text style={styles.textTitle}>Name:</Text>
+                  <Text style={styles.textSub}>{user?.name}</Text>
+                </View>
+                <View style={{ marginVertical: 2 }}>
+                  <Text style={styles.textTitle}>Email:</Text>
+                  <Text style={styles.textSub}>{user?.email}</Text>
+                </View>
+                <View style={{ marginVertical: 2 }}>
+                  <Text style={styles.textTitle}>Phone No:</Text>
+                  <Text style={styles.textSub}>{user?.phoneNumber}</Text>
                 </View>
               </View>
-              <PrimaryBtn
-                text={"More Info"}
-                onBtnPress={() =>
-                  navigation.navigate("CarInfoScreen", { data: car })
-                }
+              <Image
+                source={{ uri: user?.profileImg }}
+                style={{ height: 120, width: 120, borderRadius: 999 }}
               />
-            </>
-          )}
-        </View>
+            </View>
+          </View>
+        ) : (
+          <View
+            style={[
+              containerLight,
+
+              {
+                paddingVertical: 10,
+                paddingHorizontal: 20,
+              },
+            ]}
+          >
+            <Text
+              style={{
+                fontFamily: FONTS.semiBold,
+                fontSize: SIZES.medium,
+                color: colors.primary,
+                paddingVertical: 10,
+              }}
+            >
+              Taxi <Fontisto name="taxi" size={24} color={colors.secondary} />{" "}
+              Details
+            </Text>
+            <LineDivider />
+            {assignedCarId == "" ? (
+              <Text>You Haven't Been Assigned Taxi Driver</Text>
+            ) : (
+              <>
+                <View
+                  style={{
+                    flexDirection: "row-reverse",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    width: "100%",
+                  }}
+                >
+                  <Image
+                    source={{ uri: car?.carImage }}
+                    style={{
+                      height: 100,
+                      width: 100,
+                      borderRadius: 30,
+                      marginVertical: 10,
+                    }}
+                  />
+                  <View>
+                    <SubHeader text={car?.carName} color={colors.primary} />
+                    <Text>Model: {`${car?.carModel}`}</Text>
+                    <Text>Color: {car?.carColor}</Text>
+                    <Text>Plate Number: {car?.plateNumber}</Text>
+                  </View>
+                </View>
+                <Text
+                  style={{
+                    fontFamily: FONTS.semiBold,
+                    fontSize: SIZES.medium,
+                    color: colors.primary,
+                    paddingVertical: 10,
+                  }}
+                >
+                  Driver's{" "}
+                  <AntDesign name="user" size={24} color={colors.secondary} />{" "}
+                  Details
+                </Text>
+                <LineDivider />
+                <View
+                  style={{
+                    width: "100%",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    paddingVertical: 10,
+                    // alignItems: "center",
+                  }}
+                >
+                  <View>
+                    <View style={{ marginVertical: 2 }}>
+                      <Text style={styles.textTitle}>Name:</Text>
+                      <Text style={styles.textSub}>{user?.name}</Text>
+                    </View>
+                    <View style={{ marginVertical: 2 }}>
+                      <Text style={styles.textTitle}>Email:</Text>
+                      <Text style={styles.textSub}>{user?.email}</Text>
+                    </View>
+                    <View style={{ marginVertical: 2 }}>
+                      <Text style={styles.textTitle}>Phone No:</Text>
+                      <Text style={styles.textSub}>{user?.phoneNumber}</Text>
+                    </View>
+                  </View>
+                  <Image
+                    source={{ uri: user?.profileImg }}
+                    style={{ height: 120, width: 120, borderRadius: 999 }}
+                  />
+                </View>
+              </>
+            )}
+          </View>
+        )}
         {/* Booking Details */}
         {/*  */}
         {/* Pickup and Return Date */}
@@ -278,6 +376,7 @@ const TaxiBookingDetails = () => {
           </View>
         </View>
       </View>
+      <View style={{ height: 50, width: "100%" }} />
     </ScrollView>
   );
 };

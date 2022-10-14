@@ -19,7 +19,9 @@ const TaxiContextProvider = ({ children }) => {
   const [travelTimeInformation, setTravelTimeInformation] = useState(null);
   const [travelPrice, setTravelPrice] = useState(null);
   const [availableDrivers, setAvailableDrivers] = useState(null);
+  const [driverBookings, setDriverBookings] = useState(null);
   const [rideCity, setRideCity] = useState(null);
+  const [driver, setDriver] = useState(null);
   const { authUser } = useAuthContext();
   useEffect(() => {
     (async () => {
@@ -71,6 +73,10 @@ const TaxiContextProvider = ({ children }) => {
         setTravelPrice,
         rideCity,
         setRideCity,
+        driverBookings,
+        setDriverBookings,
+        driver,
+        setDriver,
       }}
     >
       {children}

@@ -20,7 +20,7 @@ const ManageTaxiBookings = () => {
   useEffect(() => {
     const fetchData = async () => {
       await axios
-        .get(`${baseURL}/taxi/bookings/${authUser?._id}`, config)
+        .get(`${baseURL}/taxi/user/bookings/${authUser?._id}`, config)
         .then((res) => {
           setBookings(res.data);
         })

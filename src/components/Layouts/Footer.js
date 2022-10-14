@@ -226,6 +226,63 @@ const Footer = ({ active, searchPath }) => {
           </TouchableOpacity> */}
         </>
       )}
+      {/* Taxi Driver Only MEnu Items  */}
+      {authUser?.userRole === "taxiDriver" && (
+        <>
+          <TouchableOpacity
+            style={styles.iconContainer}
+            onPress={() => navigation.navigate("TaxiDriverHome")}
+          >
+            <Ionicons
+              name="home-outline"
+              size={24}
+              color={
+                active === "driver-home" ? colors.primary : colors.secondary
+              }
+            />
+            <Text
+              style={[
+                styles.text,
+                {
+                  color:
+                    active === "driver-home"
+                      ? colors.primary
+                      : colors.secondary,
+                },
+              ]}
+            >
+              Home
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.iconContainer}
+            onPress={() => navigation.navigate("DriverManageBooking")}
+          >
+            <MaterialCommunityIcons
+              name="briefcase-outline"
+              size={24}
+              color={
+                active === "driver-manage-bookings"
+                  ? colors.primary
+                  : colors.secondary
+              }
+            />
+            <Text
+              style={[
+                styles.text,
+                {
+                  color:
+                    active === "driver-manage-bookings"
+                      ? colors.primary
+                      : colors.secondary,
+                },
+              ]}
+            >
+              Bookings
+            </Text>
+          </TouchableOpacity>
+        </>
+      )}
       <TouchableOpacity style={styles.iconContainer}>
         <Ionicons
           name="md-wallet-outline"

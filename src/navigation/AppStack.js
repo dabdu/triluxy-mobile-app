@@ -48,7 +48,10 @@ import {
 } from "../screens/wallet";
 import {
   ChooseRide,
+  DriverManageBooking,
+  FilterTaxiBooking,
   TaxiDetailsScreen,
+  TaxiDriverHome,
   TaxiHome,
   TaxiPayment,
   TaxiSearchResult,
@@ -80,6 +83,8 @@ const AppStack = () => {
           ? "HotelHome"
           : authUser?.userRole === "carRentor"
           ? "CarRentorHome"
+          : authUser?.userRole === "taxiDriver"
+          ? "TaxiDriverHome"
           : "Home"
       }
     >
@@ -159,6 +164,39 @@ const AppStack = () => {
       <Stack.Screen name="TaxiSearchResult" component={TaxiSearchResult} />
       <Stack.Screen name="TaxiDetailsScreen" component={TaxiDetailsScreen} />
       <Stack.Screen name="TaxiPayment" component={TaxiPayment} />
+      <Stack.Screen
+        name="TaxiDriverHome"
+        component={TaxiDriverHome}
+        options={{
+          headerShown: true,
+          headerBackTitle: false,
+          headerTitle: "Manage Request",
+          headerTintColor: "white",
+          headerStyle: { backgroundColor: colors.secondary },
+        }}
+      />
+      <Stack.Screen
+        name="DriverManageBooking"
+        component={DriverManageBooking}
+        options={{
+          headerShown: true,
+          headerBackTitle: false,
+          headerTitle: "Manage Bookings",
+          headerTintColor: "white",
+          headerStyle: { backgroundColor: colors.secondary },
+        }}
+      />
+      <Stack.Screen
+        name="FilterTaxiBooking"
+        component={FilterTaxiBooking}
+        options={{
+          headerShown: true,
+          headerBackTitle: false,
+          headerTitle: "Manage Bookings",
+          headerTintColor: "white",
+          headerStyle: { backgroundColor: colors.secondary },
+        }}
+      />
       {/* Taxi Screenss Screen Ends HEre*/}
       {/* Wallet Screens Screens Ends Here */}
       <Stack.Screen name="PaymentScreen" component={PaymentScreen} />

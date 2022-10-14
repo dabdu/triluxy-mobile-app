@@ -1,13 +1,13 @@
 import { View, Text, FlatList } from "react-native";
 import React from "react";
-import NoResult from "../NoResult";
-import { colors, FONTS, SIZES } from "../../../constants/theme";
-import TaxiBookingItem from "./TaxiBookingItem";
+import NoResult from "../../NoResult";
+import { colors, FONTS, SIZES } from "../../../../constants/theme";
+import UserItem from "./UserItem";
 
-const TaxiBookingContainer = ({ data, tab }) => {
+const UserContainer = ({ data, tab, driver }) => {
   const bookings =
     tab === "new"
-      ? data?.filter((item) => item.status != "CHECKEDOUT")
+      ? data?.filter((item) => item.status === "BOOKED")
       : data?.filter((item) => item.status === "CHECKEDOUT");
   return (
     <View style={{ height: "100%", width: "100%", backgroundColor: "white" }}>
@@ -16,7 +16,7 @@ const TaxiBookingContainer = ({ data, tab }) => {
           showsVerticalScrollIndicator={false}
           data={bookings}
           keyExtractor={(item) => item._id}
-          renderItem={({ item }) => <TaxiBookingItem data={item} />}
+          renderItem={({ item }) => <UserItem data={item} driver={driver} />}
           ListHeaderComponent={
             <Text
               style={{
@@ -25,7 +25,7 @@ const TaxiBookingContainer = ({ data, tab }) => {
                 fontSize: SIZES.large,
               }}
             >
-              Bookings
+              {`${tab === "new" ? "New Request" : "Completed Rides"}`}{" "}
             </Text>
           }
           style={{ marginHorizontal: 20, marginVertical: 25 }}
@@ -35,7 +35,7 @@ const TaxiBookingContainer = ({ data, tab }) => {
         <NoResult
           text={`${
             tab === "new"
-              ? "You Have No Taxi Bookings"
+              ? "You Have No New Ride Request"
               : "You Have No Previous Taxi Bookings"
           }`}
         />
@@ -44,4 +44,4 @@ const TaxiBookingContainer = ({ data, tab }) => {
   );
 };
 
-export default TaxiBookingContainer;
+export default UserContainer;

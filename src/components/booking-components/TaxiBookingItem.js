@@ -110,7 +110,11 @@ const TaxiBookingItem = ({ data }) => {
               marginBottom: 10,
             }}
           >
-            {status}
+            {status === "CHECKEDOUT"
+              ? "Trip Ended"
+              : status === "CHECKEDIN"
+              ? "Trip In Progress"
+              : status}
           </Text>
           <FormatedNumber
             value={amount}
@@ -119,17 +123,24 @@ const TaxiBookingItem = ({ data }) => {
           />
         </View>
       </View>
-      {status === "BOOKED" && (
-        <Text
-          style={{
-            textAlign: "center",
-            color: colors.darkPrimary,
-            fontStyle: "italic",
-          }}
-        >
-          Awaiting Confirmation, yet to assigned Driver
-        </Text>
-      )}
+      <Text
+        style={{
+          textAlign: "center",
+          color: colors.gray,
+          fontWeight: "500",
+          fontStyle: "italic",
+        }}
+      >
+        {status === "BOOKED"
+          ? "Awaiting Confirmation, yet to assigned Driver"
+          : status === "CONFIRMED"
+          ? "Awaiting Driver's Pick up"
+          : status === "CHECKEDIN"
+          ? "Picked Up by Driver, Safe Trip"
+          : status === "CHECKEDOUT"
+          ? "Picked up and Dropped Off, trip ended"
+          : ""}
+      </Text>
     </TouchableOpacity>
   );
 };
