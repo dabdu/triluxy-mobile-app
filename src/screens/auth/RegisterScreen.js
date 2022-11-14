@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image, Alert } from "react-native";
 import React, { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import {
   AntDesign,
   Feather,
@@ -15,6 +15,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import axios from "axios";
 import { Spinner } from "../../components";
 import baseURL from "../../../constants/baseURL";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const RegisterScreen = () => {
   const [fullName, setFullName] = useState("");
@@ -23,6 +24,8 @@ const RegisterScreen = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
+  const route = useRoute();
+  const params = route.params;
 
   const onSignUp = () => {
     setLoading(true);
@@ -40,7 +43,7 @@ const RegisterScreen = () => {
         email: email,
         phoneNumber: phone,
         password: password,
-        userRole: "User",
+        userRole: params.userType,
         userStatus: "active",
       };
       axios
@@ -85,8 +88,30 @@ const RegisterScreen = () => {
         backgroundColor: "white",
       }}
     >
-      <View style={{ width: "100%", marginTop: 20 }}>
-        <Image source={image1} style={{ height: 250, width: "100%" }} />
+      <View
+        style={{
+          width: "100%",
+          marginTop: 20,
+          height: 250,
+          position: "relative",
+        }}
+      >
+        {/* Image Uploader */}
+        <View
+          style={{
+            width: "100%",
+            position: "absolute",
+            bottom: 0,
+            zIndex: 100,
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
+          <TouchableOpacity
+            style={{ backgroundColor: "white", height: 120, width: 120 }}
+          ></TouchableOpacity>
+        </View>
+        <Image source={image1} style={{ height: "100%", width: "100%" }} />
       </View>
       <View style={{ paddingHorizontal: 20 }}>
         <View style={{ marginVertical: 20 }}>

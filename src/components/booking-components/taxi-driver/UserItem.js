@@ -43,6 +43,7 @@ const UserItem = ({ data, driver }) => {
     userId,
     driverEmail: authUser?.email,
   };
+
   const getDate = () => {
     let tempDate = new Date(createdAt);
     let fDate =

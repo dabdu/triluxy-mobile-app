@@ -32,6 +32,8 @@ const BasketScreen = () => {
   const [deliveryAddress, setDeliveryAddress] = useState({
     location: null,
     description: null,
+    deliveryFee: 2000,
+    deliveryCity: null,
   });
   const [showDeliveryAddress, setShowDeliveryAddress] = useState(false);
   const [showPaymentCont, setShowPaymentCont] = useState(false);
@@ -75,6 +77,10 @@ const BasketScreen = () => {
         text2: "Please Enter your Delivery Address",
       });
     } else {
+      const tempRideCity = deliveryAddress.description.split(",");
+      const length = tempRideCity.length - 2;
+      const ride_city = tempRideCity[length].replace(/\s+/g, "");
+      deliveryAddress.deliveryCity = ride_city;
       navigation.navigate("BasketPaymentScreen", {
         newOrder,
         currentBasket,
@@ -98,6 +104,10 @@ const BasketScreen = () => {
       transType: "DEBIT",
       paymentMode: "WALLET",
     };
+    const tempRideCity = deliveryAddress.description.split(",");
+    const length = tempRideCity.length - 2;
+    const ride_city = tempRideCity[length].replace(/\s+/g, "");
+    deliveryAddress.deliveryCity = ride_city;
     let orderData = {
       userId: userId,
       restaurantId: restaurantId,

@@ -12,6 +12,7 @@ import WalletContextProvider from "./context/WalletContext";
 import RestaurantContextProvider from "./context/RestaurantContext";
 import TaxiContextProvider from "./context/TaxiContext";
 import CarContextProvider from "./context/CarContext";
+import RiderContextProvider from "./context/RiderContext";
 import AuthStack from "./src/navigation/AuthStack";
 import AppStack from "./src/navigation/AppStack";
 import { TransparentSpinner } from "./src/components";
@@ -39,7 +40,7 @@ export default function App() {
   //   }
   // }, []);
   // if (!authUser) return <TransparentSpinner />;
-  console.log(authUser);
+  // console.log(authUser);
   if (!loaded) return null;
   return (
     <NavigationContainer>
@@ -48,16 +49,18 @@ export default function App() {
           <HotelContextProvider>
             <RestaurantContextProvider>
               <TaxiContextProvider>
-                <CarContextProvider>
-                  <StatusBar
-                    backgroundColor={colors.secondary}
-                    barStyle="light-content"
-                  />
-                  {/* {authUser !== null ? <AppStack /> : <AuthStack />} */}
-                  {/* <RootNavigator /> */}
-                  <AppNavigation />
-                  <Toast />
-                </CarContextProvider>
+                <RiderContextProvider>
+                  <CarContextProvider>
+                    <StatusBar
+                      backgroundColor={colors.secondary}
+                      barStyle="light-content"
+                    />
+                    {/* {authUser !== null ? <AppStack /> : <AuthStack />} */}
+                    {/* <RootNavigator /> */}
+                    <AppNavigation />
+                    <Toast />
+                  </CarContextProvider>
+                </RiderContextProvider>
               </TaxiContextProvider>
             </RestaurantContextProvider>
           </HotelContextProvider>

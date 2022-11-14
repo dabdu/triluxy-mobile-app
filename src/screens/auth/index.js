@@ -3,6 +3,7 @@ import LoginScreen from "./LoginScreen";
 import OTPScreen from "./OTPScreen";
 import ProfileScreen from "./ProfileScreen";
 import RegisterScreen from "./RegisterScreen";
+import UserSelectorScreen from "./UserSelectorScreen";
 import VerificationScreen from "./VerificationScreen";
 
 export {
@@ -12,4 +13,5 @@ export {
   ForgetPassword,
   VerificationScreen,
   ProfileScreen,
+  UserSelectorScreen,
 };

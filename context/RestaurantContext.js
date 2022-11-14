@@ -7,7 +7,9 @@ const RestaurantContext = createContext({});
 const RestaurantContextProvider = ({ children }) => {
   const [restaurants, setRestaurants] = useState([]);
   const [basket, setBasket] = useState([]);
-  const [currentRestaurant, setCurrentRestaurant] = useState({});
+  const [currentRestaurant, setCurrentRestaurant] = useState(null);
+  const [resReservations, setResReservations] = useState(null);
+  const [resOrders, setResOrders] = useState(null);
   const { authUser } = useAuthContext();
 
   useEffect(() => {
@@ -45,6 +47,10 @@ const RestaurantContextProvider = ({ children }) => {
         getCurrentRestaurantDetails,
         currentRestaurant,
         setCurrentRestaurant,
+        resReservations,
+        setResReservations,
+        resOrders,
+        setResOrders,
       }}
     >
       {children}

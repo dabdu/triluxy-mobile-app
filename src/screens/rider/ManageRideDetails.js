@@ -1,7 +1,15 @@
-import { View, Text, ScrollView, StyleSheet, Image } from "react-native";
-import React from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  Image,
+  FlatList,
+} from "react-native";
+import React, { useEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import {
+  FormatedNumber,
   LineDivider,
   MapMarker,
   SubHeader,
@@ -12,30 +20,62 @@ import { colors, FONTS, SIZES } from "../../../constants/theme";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { containerLight } from "../../../constants/layouts";
 import { getWordDate } from "../../../constants/functions";
+import { BasketItem } from "../../components/restaurant-components";
 import { useAuthContext } from "../../../context/AuthContext";
+import axios from "axios";
+import baseURL from "../../../constants/baseURL";
 
-const RestaurantBookingDetails = () => {
+const ManageRideDetails = () => {
+  const [user, setUser] = useState(null);
   const route = useRoute();
+  const { data, restaurant } = route?.params;
   const navigation = useNavigation();
-  const { authUser } = useAuthContext();
-  const { data, restaurant, user } = route?.params;
-  console.log(restaurant, data);
   const { address, fImg, state, town, restaurantName } = restaurant;
-  const { checkInDate, checkInTime, reservePersons, status } = data;
-  if (!data || !restaurant) return <TransparentSpinner />;
+  const {
+    userId,
+    amount,
+    deliveryAddress,
+    orderedItems,
+    status,
+    paymentMode,
+    transactionId,
+    transactionRef,
+  } = data;
+  const { authUser } = useAuthContext();
+  const config = {
+    headers: {
+      Authorization: `Bearer ${authUser?.token}`,
+    },
+  };
+  useEffect(() => {
+    if (data) {
+      axios
+        .get(`${baseURL}/user/user/${userId}`, config)
+        .then((res) => {
+          setUser(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      return () => {
+        setUser({});
+      };
+    }
+  }, []);
+  if (!data || !restaurant || !user) return <TransparentSpinner />;
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100%",
-        width: "100%",
-        paddingHorizontal: 30,
-      }}
-    >
-      {/* User Details */}
-      {authUser?.userRole === "resAdmin" ? (
+    <ScrollView>
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "space-around",
+          height: "100%",
+          width: "100%",
+          paddingHorizontal: 30,
+        }}
+      >
+        {/* User Details */}
         <View
           style={[
             containerLight,
@@ -87,11 +127,10 @@ const RestaurantBookingDetails = () => {
             />
           </View>
         </View>
-      ) : (
+        {/* Restaurant Details */}
         <View
           style={[
             containerLight,
-
             {
               paddingVertical: 10,
               paddingHorizontal: 20,
@@ -133,56 +172,27 @@ const RestaurantBookingDetails = () => {
             }
           />
         </View>
-      )}
-
-      {/* Booking Details */}
-      <View style={containerLight}>
-        <SubHeader text={"Booking Details"} />
-        <LineDivider />
-        <View>
+        {/* Booking Details */}
+        <View style={containerLight}>
+          <SubHeader text={"Delivery Details"} />
+          <LineDivider />
           <View
             style={{
-              flexDirection: "row",
-              justifyContent: "space-around",
-              alignItems: "center",
-              paddingVertical: 10,
+              width: "100%",
             }}
           >
-            <View>
-              <Text
-                style={{
-                  fontFamily: FONTS.medium,
-                  color: colors.darkPrimary,
-                }}
-              >
-                Check In Date
-              </Text>
-              <Text style={styles.contDesc}>{getWordDate(checkInDate)}</Text>
-            </View>
-            <View>
-              <Text
-                style={{
-                  fontFamily: FONTS.medium,
-                  color: colors.darkPrimary,
-                }}
-              >
-                CheckIn Time
-              </Text>
-              <Text style={styles.contDesc}>{checkInTime}</Text>
-            </View>
-            <View>
-              <Text
-                style={{
-                  fontFamily: FONTS.medium,
-                  color: colors.darkPrimary,
-                }}
-              >
-                Person(s)
-              </Text>
-              <Text style={styles.contDesc}>{reservePersons}</Text>
-            </View>
+            <Text
+              style={{
+                fontSize: SIZES.medium,
+                fontFamily: FONTS.medium,
+                color: colors.primary,
+                paddingVertical: 10,
+              }}
+            >
+              Ordered Items
+            </Text>
           </View>
-
+          {/* Delivery Status */}
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
@@ -194,14 +204,14 @@ const RestaurantBookingDetails = () => {
                 fontFamily: FONTS.bold,
               }}
             >
-              Reservation Status
+              Delivery Status
             </Text>
             <Text
               style={{
                 paddingVertical: 5,
                 paddingHorizontal: 8,
                 backgroundColor:
-                  status === "CHECKEDOUT"
+                  status === "COMPLETED"
                     ? colors.successColor
                     : colors.secondary,
                 borderRadius: 10,
@@ -209,14 +219,34 @@ const RestaurantBookingDetails = () => {
                 fontFamily: FONTS.bold,
               }}
             >
-              {status}
+              {status === "COMPLETED" ? "DELIVERED & RECIEVED" : status}
             </Text>
+          </View>
+          <View style={{ paddingVertical: 10 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <SubHeader text={"Delivery Fee"} color={colors.darkPrimary} />
+              <FormatedNumber
+                value={deliveryAddress.deliveryFee}
+                size={SIZES.medium}
+                color={colors.primary}
+              />
+            </View>
+          </View>
+          <View style={{ paddingBottom: 5 }}>
+            <SubHeader text={"Delivery Address"} color={colors.darkPrimary} />
+            <MapMarker location={`${deliveryAddress?.description}`} />
           </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
-export default RestaurantBookingDetails;
+export default ManageRideDetails;
 const styles = StyleSheet.create({});

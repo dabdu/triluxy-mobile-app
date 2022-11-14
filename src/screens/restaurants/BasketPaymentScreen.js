@@ -40,7 +40,6 @@ const BasketPaymentScreen = () => {
       deliveryAddress: deliveryAddress,
       paymentMode: "PAYSTACK",
     };
-    console.log(orderData);
     await axios
       .post(`${baseURL}/restaurant/order`, orderData, config)
       .then((res) => {
@@ -53,7 +52,10 @@ const BasketPaymentScreen = () => {
               "Our Restaurant will Confirm and Process Your Order, Please await our Confirmation mail",
           });
           setBasket([]);
-          navigation.navigate("ManageBooking");
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "ManageBooking" }],
+          });
           setBtnLoading(false);
         }
       })

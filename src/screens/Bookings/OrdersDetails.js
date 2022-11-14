@@ -17,15 +17,15 @@ import {
 } from "../../components";
 import { PrimaryBtn, SecBtn } from "../../components/Forms";
 import { colors, FONTS, SIZES } from "../../../constants/theme";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { containerLight } from "../../../constants/layouts";
 import { getWordDate } from "../../../constants/functions";
 import { BasketItem } from "../../components/restaurant-components";
+import { useAuthContext } from "../../../context/AuthContext";
 
 const OrdersDetails = () => {
   const route = useRoute();
-  const { data, restaurant } = route?.params;
-  console.log(restaurant, data);
+  const { data, restaurant, user } = route?.params;
   const navigation = useNavigation();
   const { address, fImg, state, town, restaurantName } = restaurant;
   const {
@@ -37,8 +37,8 @@ const OrdersDetails = () => {
     transactionId,
     transactionRef,
   } = data;
+  const { authUser } = useAuthContext();
   if (!data || !restaurant) return <TransparentSpinner />;
-  console.log(data);
   return (
     <ScrollView>
       <View
@@ -51,52 +51,107 @@ const OrdersDetails = () => {
           paddingHorizontal: 30,
         }}
       >
-        {/* Restaurant Details */}
-        <View
-          style={[
-            containerLight,
+        {/* User Details */}
+        {user && authUser.userRole === "resAdmin" ? (
+          <View
+            style={[
+              containerLight,
 
-            {
-              paddingVertical: 10,
-              paddingHorizontal: 20,
-            },
-          ]}
-        >
-          <Text
-            style={{
-              fontFamily: FONTS.semiBold,
-              fontSize: SIZES.medium,
-              color: colors.primary,
-              paddingVertical: 10,
-            }}
+              {
+                paddingVertical: 10,
+                paddingHorizontal: 20,
+              },
+            ]}
           >
-            Restaurant{" "}
-            <Ionicons
-              name="restaurant-outline"
-              size={24}
-              color={colors.secondary}
-            />{" "}
-            Details
-          </Text>
-          <LineDivider />
-          <Image
-            source={{ uri: fImg }}
-            style={{
-              height: 120,
-              width: 120,
-              borderRadius: 50,
-              marginVertical: 10,
-            }}
-          />
-          <SubHeader text={restaurantName} color={colors.primary} />
-          <MapMarker location={`${address}, ${town}, ${state}.`} />
-          <PrimaryBtn
-            text={"More Info"}
-            onBtnPress={() =>
-              navigation.navigate("SingleRestaurant", { data: restaurant })
-            }
-          />
-        </View>
+            <Text
+              style={{
+                fontFamily: FONTS.semiBold,
+                fontSize: SIZES.medium,
+                color: colors.primary,
+                paddingVertical: 10,
+              }}
+            >
+              User's{" "}
+              <AntDesign name="user" size={24} color={colors.secondary} />{" "}
+              Details
+            </Text>
+            <LineDivider />
+            <View
+              style={{
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                paddingVertical: 10,
+                // alignItems: "center",
+              }}
+            >
+              <View>
+                <View style={{ marginVertical: 2 }}>
+                  <Text style={styles.textTitle}>Name:</Text>
+                  <Text style={styles.textSub}>{user?.name}</Text>
+                </View>
+                <View style={{ marginVertical: 2 }}>
+                  <Text style={styles.textTitle}>Email:</Text>
+                  <Text style={styles.textSub}>{user?.email}</Text>
+                </View>
+                <View style={{ marginVertical: 2 }}>
+                  <Text style={styles.textTitle}>Phone No:</Text>
+                  <Text style={styles.textSub}>{user?.phoneNumber}</Text>
+                </View>
+              </View>
+              <Image
+                source={{ uri: user?.profileImg }}
+                style={{ height: 120, width: 120, borderRadius: 999 }}
+              />
+            </View>
+          </View>
+        ) : (
+          <View
+            style={[
+              containerLight,
+              {
+                paddingVertical: 10,
+                paddingHorizontal: 20,
+              },
+            ]}
+          >
+            {/* Restaurant Details */}
+            <Text
+              style={{
+                fontFamily: FONTS.semiBold,
+                fontSize: SIZES.medium,
+                color: colors.primary,
+                paddingVertical: 10,
+              }}
+            >
+              Restaurant{" "}
+              <Ionicons
+                name="restaurant-outline"
+                size={24}
+                color={colors.secondary}
+              />{" "}
+              Details
+            </Text>
+            <LineDivider />
+            <Image
+              source={{ uri: fImg }}
+              style={{
+                height: 120,
+                width: 120,
+                borderRadius: 50,
+                marginVertical: 10,
+              }}
+            />
+            <SubHeader text={restaurantName} color={colors.primary} />
+            <MapMarker location={`${address}, ${town}, ${state}.`} />
+            <PrimaryBtn
+              text={"More Info"}
+              onBtnPress={() =>
+                navigation.navigate("SingleRestaurant", { data: restaurant })
+              }
+            />
+          </View>
+        )}
         {/* Booking Details */}
         <View style={containerLight}>
           <SubHeader text={"Booking Details"} />
@@ -134,12 +189,26 @@ const OrdersDetails = () => {
                   flexDirection: "row",
                   justifyContent: "space-between",
                   alignItems: "center",
+                }}
+              >
+                <Text>Delivery Fee</Text>
+                <FormatedNumber
+                  value={deliveryAddress.deliveryFee}
+                  size={SIZES.medium}
+                  color={colors.primary}
+                />
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
                   marginVertical: 20,
                 }}
               >
                 <Text>Total</Text>
                 <FormatedNumber
-                  value={amount}
+                  value={amount + deliveryAddress.deliveryFee}
                   size={SIZES.large}
                   color={colors.primary}
                 />

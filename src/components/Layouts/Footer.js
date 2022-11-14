@@ -81,7 +81,32 @@ const Footer = ({ active, searchPath }) => {
         <>
           <TouchableOpacity
             style={styles.iconContainer}
-            onPress={() => navigation.navigate("Home")}
+            onPress={() => navigation.navigate("RestaurantAdminHome")}
+          >
+            <Ionicons
+              name="home-outline"
+              size={24}
+              color={
+                active === "restaurantHome" ? colors.primary : colors.secondary
+              }
+            />
+            <Text
+              style={[
+                styles.text,
+                {
+                  color:
+                    active === "restaurantHome"
+                      ? colors.primary
+                      : colors.secondary,
+                },
+              ]}
+            >
+              Home
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.iconContainer}
+            onPress={() => navigation.navigate("ManageReservations")}
           >
             <AntDesign
               name="trademark"
@@ -106,19 +131,19 @@ const Footer = ({ active, searchPath }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.iconContainer}
-            // onPress={() => navigation.navigate("ManageBooking")}
+            onPress={() => navigation.navigate("ManageOrders")}
           >
             <Ionicons
               name="fast-food-outline"
               size={24}
-              color={active === "booking" ? colors.primary : colors.secondary}
+              color={active === "orders" ? colors.primary : colors.secondary}
             />
             <Text
               style={[
                 styles.text,
                 {
                   color:
-                    active === "booking" ? colors.primary : colors.secondary,
+                    active === "orders" ? colors.primary : colors.secondary,
                 },
               ]}
             >
@@ -146,6 +171,59 @@ const Footer = ({ active, searchPath }) => {
               My Restaurant
             </Text>
           </TouchableOpacity> */}
+        </>
+      )}
+      {/* RIder Admin Only MEnu Items  */}
+      {authUser?.userRole === "rider" && (
+        <>
+          <TouchableOpacity
+            style={styles.iconContainer}
+            onPress={() => navigation.navigate("RiderHome")}
+          >
+            <Ionicons
+              name="home-outline"
+              size={24}
+              color={
+                active === "rider-home" ? colors.primary : colors.secondary
+              }
+            />
+            <Text
+              style={[
+                styles.text,
+                {
+                  color:
+                    active === "rider-home" ? colors.primary : colors.secondary,
+                },
+              ]}
+            >
+              Home
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.iconContainer}
+            onPress={() => navigation.navigate("ManageRiderRequest")}
+          >
+            <AntDesign
+              name="trademark"
+              size={24}
+              color={
+                active === "rider-request" ? colors.primary : colors.secondary
+              }
+            />
+            <Text
+              style={[
+                styles.text,
+                {
+                  color:
+                    active === "rider-request"
+                      ? colors.primary
+                      : colors.secondary,
+                },
+              ]}
+            >
+              Requests
+            </Text>
+          </TouchableOpacity>
         </>
       )}
       {/* Car Rentor Only MEnu Items  */}

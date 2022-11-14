@@ -68,7 +68,19 @@ import {
   SingleRestaurant,
 } from "../screens/restaurants";
 import { ProfileScreen } from "../screens/auth";
-import { Home } from "../screens/restaurants/restaurant-owner";
+import {
+  FilterReservations,
+  ManageReservations,
+  RestaurantAdminHome,
+  ManageOrders,
+  FilteredOrders,
+} from "../screens/restaurants/restaurant-owner";
+import {
+  FilterDeliveries,
+  ManageRideDetails,
+  ManageRiderRequest,
+  RiderHome,
+} from "../screens/rider";
 // const Stack = createNativeStackNavigator();
 
 const Stack = createStackNavigator();
@@ -85,7 +97,9 @@ const AppStack = () => {
           ? "CarRentorHome"
           : authUser?.userRole === "taxiDriver"
           ? "TaxiDriverHome"
-          : "Home"
+          : authUser?.userRole === "rider"
+          ? "RiderHome"
+          : "RestaurantAdminHome"
       }
     >
       {/* Flight Screens Ends Here */}
@@ -331,13 +345,57 @@ const AppStack = () => {
       <Stack.Screen name="MenuOrderDetails" component={MenuOrderDetails} />
       {/* //Restaurant Owners */}
       <Stack.Screen
-        name="Home"
-        component={Home}
+        name="RestaurantAdminHome"
+        component={RestaurantAdminHome}
         options={{
           headerShown: true,
-          headerTitle: "My Reservations",
+          headerTitle: "My Restaurant",
           headerTintColor: "white",
           headerStyle: { backgroundColor: colors.secondary },
+        }}
+      />
+      <Stack.Screen
+        name="ManageReservations"
+        component={ManageReservations}
+        options={{
+          headerShown: true,
+          headerTitle: "Manage Reservations",
+          headerTintColor: colors.secondary,
+          headerStyle: { backgroundColor: "white" },
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="FilterReservations"
+        component={FilterReservations}
+        options={{
+          headerShown: true,
+          headerTitle: "Manage Reservations",
+          headerTintColor: colors.secondary,
+          headerStyle: { backgroundColor: "white" },
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="ManageOrders"
+        component={ManageOrders}
+        options={{
+          headerShown: true,
+          headerTitle: "Manage Orders",
+          headerTintColor: colors.secondary,
+          headerStyle: { backgroundColor: "white" },
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="FilteredOrders"
+        component={FilteredOrders}
+        options={{
+          headerShown: true,
+          headerTitle: "Manage Orders",
+          headerTintColor: colors.secondary,
+          headerStyle: { backgroundColor: "white" },
+          headerBackTitleVisible: false,
         }}
       />
 
@@ -355,6 +413,56 @@ const AppStack = () => {
           headerTitle: "Bank Transfer",
           headerTintColor: "white",
           headerStyle: { backgroundColor: colors.secondary },
+        }}
+      />
+
+      {/* Rider Screens Starts Here */}
+      <Stack.Screen
+        name="RiderHome"
+        component={RiderHome}
+        options={{
+          headerShown: true,
+          headerBackTitle: false,
+          headerTitle: "Rider Home",
+          headerTintColor: "white",
+          headerStyle: { backgroundColor: colors.secondary },
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="ManageRiderRequest"
+        component={ManageRiderRequest}
+        options={{
+          headerShown: true,
+          headerBackTitle: false,
+          headerTitle: "Manage Deliveries",
+          headerTintColor: colors.secondary,
+          headerStyle: { backgroundColor: "white" },
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="FilterDeliveries"
+        component={FilterDeliveries}
+        options={{
+          headerShown: true,
+          headerBackTitle: false,
+          headerTitle: "Manage Deliveries",
+          headerTintColor: colors.secondary,
+          headerStyle: { backgroundColor: "white" },
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="ManageRideDetails"
+        component={ManageRideDetails}
+        options={{
+          headerShown: true,
+          headerBackTitle: false,
+          headerTitle: "Delivery Details",
+          headerTintColor: colors.secondary,
+          headerStyle: { backgroundColor: "white" },
+          headerBackTitleVisible: false,
         }}
       />
     </Stack.Navigator>

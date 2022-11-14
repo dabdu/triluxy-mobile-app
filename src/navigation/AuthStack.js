@@ -5,6 +5,7 @@ import {
   LoginScreen,
   OTPScreen,
   RegisterScreen,
+  UserSelectorScreen,
   VerificationScreen,
 } from "../screens/auth";
 import { HotelHome } from "../screens/hotels";
@@ -19,6 +20,7 @@ const AuthStack = () => {
       {/* Auth Screens Starts Here */}
       <Stack.Screen name="OnBoardingScreen" component={OnBoardingScreen} />
       <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+      <Stack.Screen name="UserSelectorScreen" component={UserSelectorScreen} />
       <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
       <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
