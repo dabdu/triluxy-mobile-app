@@ -9,6 +9,7 @@ import {
   MaterialCommunityIcons,
   AntDesign,
 } from "@expo/vector-icons";
+import ImageCont from "../ImageCont";
 
 const CarResultItem = ({ data }) => {
   const navigation = useNavigation();
@@ -27,15 +28,9 @@ const CarResultItem = ({ data }) => {
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         {/* Image */}
         <View style={{ width: "50%" }}>
-          <Image
-            source={{ uri: data.carImages[0] }}
-            style={{
-              height: 150,
-              width: "100%",
-              borderTopLeftRadius: 10,
-            }}
-            resizeMode="contain"
-          />
+          <View style={{ height: 150, width: "100%" }}>
+            <ImageCont source={data.carImage} />
+          </View>
         </View>
         {/* Description */}
         <View style={{ width: "50%", paddingHorizontal: 10 }}>
@@ -115,7 +110,8 @@ const CarResultItem = ({ data }) => {
         }}
         onPress={() => navigation.navigate("CarDetailsScreen", { data })}
       >
-        <View>
+        {/* Car Specs Been Removed for now */}
+        {/* <View>
           {data.carSpecs.slice(0, 3).map((text, i) => (
             <View
               style={{ flexDirection: "row", alignItems: "center" }}
@@ -129,7 +125,7 @@ const CarResultItem = ({ data }) => {
               </Text>
             </View>
           ))}
-        </View>
+        </View> */}
         <View>
           <AntDesign name="right" size={24} color="white" />
         </View>

@@ -156,6 +156,15 @@ const AuthContextProvider = ({ children }) => {
     // getUserInfo();
     isLoggedIn();
   }, []);
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${authUser?.token}`,
+    },
+  };
+
+  const userId = authUser?._id;
+
   return (
     <AuthContext.Provider
       value={{
@@ -167,6 +176,8 @@ const AuthContextProvider = ({ children }) => {
         Login,
         authUser,
         splashLoading,
+        config,
+        userId,
       }}
     >
       {children}

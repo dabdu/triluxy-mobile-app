@@ -20,7 +20,6 @@ const TaxiDriverHome = () => {
   const { authUser } = useAuthContext();
   const { driver, setDriver } = useTaxiContext();
   useEffect(() => {
-    // if (authUser) {
     const config = {
       headers: {
         Authorization: `Bearer ${authUser?.token}`,
@@ -30,6 +29,7 @@ const TaxiDriverHome = () => {
       .get(`${baseURL}/taxi/user/driver/${authUser?._id}`, config)
       .then(async (res) => {
         setDriver(res.data);
+        console.log(driver);
         if (res.status === 200) {
           await axios
             .get(
@@ -54,7 +54,6 @@ const TaxiDriverHome = () => {
       setDriver({});
       setIsLoading(false);
     };
-    // }
   }, []);
   return (
     <View style={{ height: "100%", width: "100%" }}>

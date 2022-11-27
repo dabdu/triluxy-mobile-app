@@ -8,11 +8,11 @@ const UserSelectorScreen = () => {
   const navigation = useNavigation();
   const data = [
     { name: "User", type: "User" },
-    { name: "Restaurant", type: "resAdmin" },
-    { name: "Hotel", type: "hotelAdmin" },
+    // { name: "Restaurant", type: "resAdmin" },
+    // { name: "Hotel", type: "hotelAdmin" },
     { name: "Car Owner", type: "carRentor" },
-    { name: "Taci Driver", type: "taxiDriver" },
-    { name: "Dispatch Rider", type: "rider" },
+    { name: "Taxi Driver", type: "taxiDriver" },
+    // { name: "Dispatch Rider", type: "rider" },
   ];
   return (
     <View

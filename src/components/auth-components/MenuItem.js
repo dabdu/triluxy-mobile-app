@@ -1,8 +1,10 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import { colors, FONTS, SIZES } from "../../../constants/theme";
+import { useNavigation } from "@react-navigation/native";
 
 const MenuItem = ({ Icon, iconName, text, path, onPress }) => {
+  const navigation = useNavigation();
   return (
     <TouchableOpacity
       style={{
@@ -11,16 +13,16 @@ const MenuItem = ({ Icon, iconName, text, path, onPress }) => {
         paddingVertical: 8,
         marginVertical: 5,
       }}
-      onPress={onPress}
+      onPress={() => navigation.navigate(path)}
     >
       <View>
-        <Icon name={iconName} color={colors.primary} size={28} />
+        <Icon name={iconName} color={colors.secondary} size={28} />
       </View>
       <Text
         style={{
           marginLeft: 12,
-          fontSize: SIZES.small,
-          color: colors.darkPrimary,
+          fontSize: SIZES.medium,
+          color: colors.primary,
           fontFamily: FONTS.semiBold,
         }}
       >

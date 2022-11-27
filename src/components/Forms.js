@@ -136,7 +136,7 @@ export const InputField = ({
   password,
 }) => {
   return (
-    <View style={{ width: "100%", position: "relative", marginVertical: 5 }}>
+    <View style={{ width: "100%", position: "relative", marginVertical: 10 }}>
       <Icon
         name={iconName}
         size={24}
@@ -156,7 +156,7 @@ export const InputField = ({
           borderColor: colors.darkSecondary,
           borderWidth: noBorder ? 0 : 1,
           fontWeight: "600",
-          paddingLeft: 40,
+          paddingLeft: 55,
           borderRadius: 10,
           backgroundColor: "white",
         }}

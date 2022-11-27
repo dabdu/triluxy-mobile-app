@@ -13,12 +13,11 @@ import RestaurantContextProvider from "./context/RestaurantContext";
 import TaxiContextProvider from "./context/TaxiContext";
 import CarContextProvider from "./context/CarContext";
 import RiderContextProvider from "./context/RiderContext";
-import AuthStack from "./src/navigation/AuthStack";
-import AppStack from "./src/navigation/AppStack";
-import { TransparentSpinner } from "./src/components";
-import { useEffect } from "react";
 import AppNavigation from "./src/navigation/AppNavigation";
+import { Amplify } from "aws-amplify";
 
+import awsconfig from "./src/aws-exports";
+Amplify.configure(awsconfig);
 export default function App() {
   const [loaded] = useFonts({
     OpenSansExtraBold: require("./assets/fonts/OpenSans-ExtraBold.ttf"),

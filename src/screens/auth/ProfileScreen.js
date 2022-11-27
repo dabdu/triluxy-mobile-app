@@ -1,5 +1,16 @@
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
-import { FontAwesome, AntDesign } from "@expo/vector-icons";
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+} from "react-native";
+import {
+  FontAwesome,
+  AntDesign,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import Footer from "../../components/Layouts/Footer";
 import { colors, FONTS, SIZES } from "../../../constants/theme";
 import { useAuthContext } from "../../../context/AuthContext";
@@ -9,10 +20,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import Toast from "react-native-toast-message";
 import { useEffect } from "react";
+import { S3Image } from "aws-amplify-react-native";
+import { useTaxiContext } from "../../../context/TaxiContext";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
   const { authUser, onLogout, isLoading } = useAuthContext();
+  const { driver } = useTaxiContext();
+  console.log(driver);
   // console.log(authUser);
   // if (!authUser) return <Spinner />;
   // const getUser = async () => {
@@ -58,8 +73,8 @@ const ProfileScreen = () => {
             }}
           />
           <View>
-            <Image
-              source={{ uri: authUser?.profileImg }}
+            <S3Image
+              imgKey={authUser?.profileImg}
               style={{
                 height: 150,
                 width: 150,
@@ -118,6 +133,32 @@ const ProfileScreen = () => {
               text={"Manage Account"}
               path={"ManageAccountScreen"}
             />
+            {authUser?.userRole === "carRentor" && (
+              <>
+                <MenuItem
+                  Icon={MaterialCommunityIcons}
+                  iconName={"car"}
+                  text={"Manage Car Details"}
+                  path={"UserManageCars"}
+                />
+                <MenuItem
+                  Icon={MaterialCommunityIcons}
+                  iconName={"car-2-plus"}
+                  text={"Add New Car"}
+                  path={"AddCarDetails"}
+                />
+              </>
+            )}
+            {authUser?.userRole === "taxiDriver" && (
+              <>
+                <MenuItem
+                  Icon={FontAwesome}
+                  iconName={"taxi"}
+                  text={"Manage Your Taxi"}
+                  path={"TaxiManageCar"}
+                />
+              </>
+            )}
             <MenuItem
               Icon={FontAwesome}
               iconName={"user-circle"}
@@ -136,12 +177,29 @@ const ProfileScreen = () => {
               text={"Manage Account"}
               path={"ManageAccountScreen"}
             />
-            <MenuItem
-              Icon={AntDesign}
-              iconName={"logout"}
-              text={"Logout"}
+            <TouchableOpacity
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                paddingVertical: 8,
+                marginVertical: 5,
+              }}
               onPress={onLogout}
-            />
+            >
+              <View>
+                <AntDesign name={"logout"} color={colors.primary} size={28} />
+              </View>
+              <Text
+                style={{
+                  marginLeft: 12,
+                  fontSize: SIZES.small,
+                  color: colors.darkPrimary,
+                  fontFamily: FONTS.semiBold,
+                }}
+              >
+                {"Logout"}
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>

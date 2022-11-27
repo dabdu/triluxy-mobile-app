@@ -1,4 +1,5 @@
-import { StyleSheet, Text, View, Image, Alert } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import * as ImagePicker from "expo-image-picker";
 import React, { useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import {
@@ -6,28 +7,33 @@ import {
   Feather,
   MaterialIcons,
   Ionicons,
+  MaterialCommunityIcons,
 } from "@expo/vector-icons";
-import { logo, colors, image1 } from "../../../constants/theme";
+import "react-native-get-random-values";
+import { v4 as uuidv4 } from "uuid";
+import { colors, image1, SIZES, FONTS } from "../../../constants/theme";
 import { InputField, LoadingBtn, SecBtn } from "../../components/Forms";
 import { MainHeading } from "../../components/Typography";
 import Toast from "react-native-toast-message";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import axios from "axios";
-import { Spinner } from "../../components";
 import baseURL from "../../../constants/baseURL";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { Storage } from "aws-amplify";
+import Spinner from "react-native-loading-spinner-overlay";
 
 const RegisterScreen = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [profileImg, setProfileImg] = useState(null);
+  const [imgKey, setImgKey] = useState(null);
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
   const route = useRoute();
   const params = route.params;
 
-  const onSignUp = () => {
+  const onSignUp = async () => {
     setLoading(true);
     if (fullName === "" || email === "" || phone === "" || password === "") {
       Toast.show({
@@ -37,6 +43,14 @@ const RegisterScreen = () => {
         text2: "Please Filled all Fields",
       });
       setLoading(false);
+    } else if (profileImg === null) {
+      Toast.show({
+        topOffset: 60,
+        type: "error",
+        text1: "Profile Image needed",
+        text2: "Please Upload Your Profile Image",
+      });
+      setLoading(false);
     } else {
       let user = {
         name: fullName,
@@ -44,9 +58,11 @@ const RegisterScreen = () => {
         phoneNumber: phone,
         password: password,
         userRole: params.userType,
+        profileImg: null,
         userStatus: "active",
       };
-      axios
+      user.profileImg = await uploadFile(profileImg);
+      await axios
         .post(`${baseURL}/user/register`, user)
         .then((res) => {
           if (res.status == 201) {
@@ -60,8 +76,6 @@ const RegisterScreen = () => {
             setTimeout(() => {
               navigation.navigate("LoginScreen");
             }, 500);
-            // navigation.navigate("FlightHome");
-            // setLoading(false);
           }
         })
         .catch((error) => {
@@ -76,18 +90,41 @@ const RegisterScreen = () => {
         });
     }
   };
-  // if (loading) return <Spinner />;
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      quality: 0.7,
+      allowsEditing: true,
+    });
+    if (!result.cancelled) {
+      setProfileImg(result.uri);
+    }
+  };
+  const uploadFile = async (fileUri) => {
+    try {
+      const response = await fetch(fileUri);
+      const blob = await response.blob();
+      const key = `${uuidv4()}.png`;
+      await Storage.put(key, blob, {
+        contentType: "image/png", // contentType is optional
+      });
+      return key;
+    } catch (err) {
+      console.log("Error uploading file:", err);
+    }
+  };
   return (
     <View
       style={{
         height: "100%",
         flex: 1,
         alignItems: "center",
-        // justifyContent: "center",
         width: "100%",
         backgroundColor: "white",
       }}
     >
+      <Spinner visible={loading} />
       <View
         style={{
           width: "100%",
@@ -101,15 +138,53 @@ const RegisterScreen = () => {
           style={{
             width: "100%",
             position: "absolute",
-            bottom: 0,
+            bottom: -10,
             zIndex: 100,
             flexDirection: "row",
             justifyContent: "center",
           }}
         >
           <TouchableOpacity
-            style={{ backgroundColor: "white", height: 120, width: 120 }}
-          ></TouchableOpacity>
+            style={{
+              height: 120,
+              width: 120,
+              backgroundColor: "white",
+              borderRadius: 999,
+            }}
+            onPress={pickImage}
+          >
+            {profileImg ? (
+              <Image
+                source={{ uri: profileImg }}
+                style={{ height: "100%", width: "100%", borderRadius: 999 }}
+              />
+            ) : (
+              <View
+                style={{
+                  height: "100%",
+                  width: "100%",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <MaterialCommunityIcons
+                  name="image-plus"
+                  size={50}
+                  color={colors.secondary}
+                />
+                <Text
+                  style={{
+                    fontSize: SIZES.base,
+                    fontFamily: FONTS.bold,
+                    color: colors.gray,
+                  }}
+                >
+                  Upload Profile Image
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
         </View>
         <Image source={image1} style={{ height: "100%", width: "100%" }} />
       </View>
@@ -192,11 +267,7 @@ const RegisterScreen = () => {
               </Text>
             </View>
             <View style={{ marginTop: 20 }}>
-              {loading ? (
-                <LoadingBtn />
-              ) : (
-                <SecBtn text={"Sign Up"} onBtnPress={onSignUp} />
-              )}
+              <SecBtn text={"Sign Up"} onBtnPress={onSignUp} />
             </View>
           </KeyboardAwareScrollView>
         </View>

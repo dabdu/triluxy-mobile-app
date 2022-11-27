@@ -9,6 +9,7 @@ import {
 import React, { useState } from "react";
 import {
   FormatedNumber,
+  ImageCont,
   ImageSlider,
   LineDivider,
   MapMarker,
@@ -57,10 +58,8 @@ const CarDetailsScreen = () => {
     carName,
     carColor,
     carDesc,
-    carDocuments,
-    carImages,
+    carImage,
     carModel,
-    carSpecs,
     plateNumber,
     plateNumberImg,
     pricePerDay,
@@ -259,8 +258,8 @@ const CarDetailsScreen = () => {
     <View style={{ paddingTop: 31 }}>
       <SearchResultHeader head="" />
       <ScrollView style={{ marginTop: 20 }}>
-        <View style={{ width: "100%" }}>
-          <ImageSlider images={carImages} />
+        <View style={{ width: "100%", height: 250, paddingHorizontal: 30 }}>
+          <ImageCont source={carImage} />
         </View>
         <View style={{ paddingHorizontal: 20 }}>
           <View
@@ -420,7 +419,7 @@ const CarDetailsScreen = () => {
           </View>
           <View style={{ marginVertical: 15 }}>
             <SubHeader text={"Car Specs"} color={colors.primary} />
-            <View style={{ marginTop: 5 }}>
+            {/* <View style={{ marginTop: 5 }}>
               {carSpecs.map((e, index) => (
                 <View
                   key={index}
@@ -434,7 +433,7 @@ const CarDetailsScreen = () => {
                   <Text style={{ marginLeft: 5, color: "gray" }}>{e}</Text>
                 </View>
               ))}
-            </View>
+            </View> */}
           </View>
           {/* Car Owner Info */}
           <View style={styles.miniCont}>
@@ -462,10 +461,9 @@ const CarDetailsScreen = () => {
                   <Text style={styles.textSub}>{carOwner?.phoneNumber}</Text>
                 </View>
               </View>
-              <Image
-                source={{ uri: carOwner?.profileImg }}
-                style={{ height: 120, width: 120, borderRadius: 999 }}
-              />
+              <View style={{ height: 120, width: 120, borderRadius: 999 }}>
+                <ImageCont source={carOwner?.profileImg} />
+              </View>
             </View>
           </View>
           {/* map Section */}
@@ -491,11 +489,9 @@ const CarDetailsScreen = () => {
             >
               Plate Number: {plateNumber}
             </Text>
-            <Image
-              source={{ uri: plateNumberImg }}
-              style={{ height: 100, width: "100%" }}
-              resizeMode="contain"
-            />
+            <View style={{ height: 100, width: "100%" }}>
+              <ImageCont source={plateNumberImg} />
+            </View>
           </View>
         </View>
         <View style={{ height: 125, width: "100%" }} />

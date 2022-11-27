@@ -24,6 +24,7 @@ import TransactionListItem from "./TransactionListItem";
 import SecondDateInput from "./SecondDateInput";
 import NewPreviousTab from "./NewPreviousTab";
 import NoResult from "./NoResult";
+import ImageCont from "./ImageCont";
 
 export {
   TransparentSpinner,
@@ -52,4 +53,5 @@ export {
   SecondDateInput,
   NewPreviousTab,
   NoResult,
+  ImageCont,
 };

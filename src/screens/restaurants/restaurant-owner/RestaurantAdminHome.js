@@ -14,13 +14,15 @@ import {
   UserOrdersContainer,
   UserReservationsContainer,
 } from "../../../components/restaurant-components/res-admin";
+import AddRestaurantDetails from "./AddRestaurantDetails";
 const RestaurantAdminHome = () => {
   const [onReservations, setOnReservations] = useState(true);
   const [onOrders, setOnOrders] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  const { authUser } = useAuthContext();
+  const { authUser, config, userId } = useAuthContext();
   const {
+    currentRestaurant,
     setCurrentRestaurant,
     resReservations,
     setResReservations,
@@ -28,13 +30,8 @@ const RestaurantAdminHome = () => {
     setResOrders,
   } = useRestaurantContext();
   useEffect(() => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${authUser?.token}`,
-      },
-    };
     axios
-      .get(`${baseURL}/restaurant/admin/${authUser?._id}`, config)
+      .get(`${baseURL}/restaurant/admin/${userId}`, config)
       .then(async (res) => {
         setCurrentRestaurant(res.data);
         if (res.status === 200) {
@@ -72,6 +69,7 @@ const RestaurantAdminHome = () => {
       setIsLoading(false);
     };
   }, []);
+  if (!currentRestaurant) return <AddRestaurantDetails />;
   return (
     <View style={{ height: "100%", width: "100%" }}>
       <Spinner visible={isLoading} />

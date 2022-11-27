@@ -29,6 +29,7 @@ import {
   SelectRoomScreen,
 } from "../screens/hotels";
 import {
+  AddCarDetails,
   CarDetailsScreen,
   CarHome,
   CarInfoScreen,
@@ -37,7 +38,9 @@ import {
   CarSearchResult,
   CarSearchScreen,
   FilterCarBooking,
+  RentorCarDetails,
   RentorHome,
+  UserManageCars,
 } from "../screens/cars";
 import {
   BankTransferScreen,
@@ -53,6 +56,7 @@ import {
   TaxiDetailsScreen,
   TaxiDriverHome,
   TaxiHome,
+  TaxiManageCar,
   TaxiPayment,
   TaxiSearchResult,
   TaxiSearchScreen,
@@ -170,6 +174,39 @@ const AppStack = () => {
           headerStyle: { backgroundColor: colors.secondary },
         }}
       />
+      <Stack.Screen
+        name="AddCarDetails"
+        component={AddCarDetails}
+        options={{
+          headerShown: true,
+          headerBackTitle: false,
+          headerTitle: "Add Car Details",
+          headerTintColor: "white",
+          headerStyle: { backgroundColor: colors.secondary },
+        }}
+      />
+      <Stack.Screen
+        name="UserManageCars"
+        component={UserManageCars}
+        options={{
+          headerShown: true,
+          headerBackTitle: false,
+          headerTitle: "Manage Your Cars",
+          headerTintColor: colors.secondary,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+      <Stack.Screen
+        name="RentorCarDetails"
+        component={RentorCarDetails}
+        options={{
+          headerShown: true,
+          headerBackTitle: false,
+          headerTitle: "Car Details",
+          headerTintColor: "white",
+          headerStyle: { backgroundColor: colors.secondary },
+        }}
+      />
       {/* Car Screenss Screen Ends HEre*/}
       {/* Taxi Screens Screens Ends Here */}
       <Stack.Screen name="TaxiHome" component={TaxiHome} />
@@ -207,6 +244,17 @@ const AppStack = () => {
           headerShown: true,
           headerBackTitle: false,
           headerTitle: "Manage Bookings",
+          headerTintColor: "white",
+          headerStyle: { backgroundColor: colors.secondary },
+        }}
+      />
+      <Stack.Screen
+        name="TaxiManageCar"
+        component={TaxiManageCar}
+        options={{
+          headerShown: true,
+          headerBackTitle: false,
+          headerTitle: "Manage Taxi",
           headerTintColor: "white",
           headerStyle: { backgroundColor: colors.secondary },
         }}
