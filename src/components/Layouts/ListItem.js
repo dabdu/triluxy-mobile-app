@@ -2,14 +2,13 @@ import { View, Text, TouchableOpacity, Image, Dimensions } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 const { width } = Dimensions.get("window");
-import { Shadow } from "react-native-shadow-2";
 import { colors, FONTS, SHADOWS, SIZES } from "../../../constants/theme";
 import { AntDesign } from "@expo/vector-icons";
 import MapMarker from "../MapMarker";
+import ImageCont from "../ImageCont";
 
 const ListItem = ({ data }) => {
   const navigation = useNavigation();
-  const image = { uri: data.fImg };
   return (
     <View
       style={{
@@ -20,7 +19,7 @@ const ListItem = ({ data }) => {
         borderColor: "#939090",
         borderRadius: 10,
         ...SHADOWS.light,
-        zIndex: -1
+        zIndex: -1,
       }}
     >
       <View
@@ -51,14 +50,9 @@ const ListItem = ({ data }) => {
               color={data.isFavorite ? "red" : "red"}
             />
           </TouchableOpacity>
-          <Image
-            style={{
-              height: 130,
-              width: "100%",
-              borderRadius: 15,
-            }}
-            source={image}
-          />
+          <View style={{ height: 130 }}>
+            <ImageCont source={data.fImg} radius={20} />
+          </View>
         </View>
         <View style={{ marginHorizontal: 10, marginVertical: 0 }}>
           <Text
@@ -80,7 +74,7 @@ const ListItem = ({ data }) => {
               marginBottom: 5,
             }}
           >
-              <MapMarker location={data.state} />
+            <MapMarker location={data.town} />
             {/* <TouchableOpacity
               style={{
                 flexDirection: "row",

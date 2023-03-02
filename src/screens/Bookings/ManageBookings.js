@@ -33,8 +33,8 @@ const ManageBooking = () => {
         <BookingItem
           Icon={Fontisto}
           iconName={"hotel"}
-          text={"Hotel Bookings"}
-          path={"ManageHotelBooking"}
+          text={"Hotel Reservations"}
+          path={"ManageHotelReservations"}
         />
       </View>
       <View style={styles.itemWrapper}>

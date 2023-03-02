@@ -1,18 +1,18 @@
-import { StyleSheet, Text, View, Image, Alert } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { logo, colors, image1 } from "../../../constants/theme";
-import { PrimaryBtn, SecBtn } from "../../components/Forms";
+import { image1 } from "../../../constants/theme";
+import { SecBtn } from "../../components/Forms";
 const UserSelectorScreen = () => {
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
   const data = [
     { name: "User", type: "User" },
-    // { name: "Restaurant", type: "resAdmin" },
-    // { name: "Hotel", type: "hotelAdmin" },
+    { name: "Restaurant", type: "resAdmin" },
+    { name: "Hotel", type: "hotelAdmin" },
     { name: "Car Owner", type: "carRentor" },
     { name: "Taxi Driver", type: "taxiDriver" },
-    // { name: "Dispatch Rider", type: "rider" },
+    { name: "Dispatch Rider", type: "rider" },
   ];
   return (
     <View
@@ -52,5 +52,3 @@ const UserSelectorScreen = () => {
 };
 
 export default UserSelectorScreen;
-
-const styles = StyleSheet.create({});

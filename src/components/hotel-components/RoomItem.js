@@ -12,6 +12,7 @@ const RoomItem = ({ category, searchedData, calDays }) => {
   return (
     <View
       style={{
+        backgroundColor: colors.veryFaintGray,
         borderRadius: 15,
         width: "100%",
         borderColor: colors.secondary,
@@ -42,7 +43,8 @@ const RoomItem = ({ category, searchedData, calDays }) => {
           <Text style={{ marginLeft: 4 }}> Per Room</Text>
         </View>
       </View>
-      <View>
+      {/* Features Container */}
+      {/* <View>
         {category?.features.map((item, index) => (
           <View
             style={{
@@ -64,7 +66,7 @@ const RoomItem = ({ category, searchedData, calDays }) => {
             </Text>
           </View>
         ))}
-      </View>
+      </View> */}
       {category?.description && (
         <View style={{ marginVertical: 10 }}>
           <Text style={{ fontWeight: "600" }}>

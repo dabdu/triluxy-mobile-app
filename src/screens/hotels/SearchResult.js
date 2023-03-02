@@ -15,39 +15,55 @@ import {
   SearchResultHeader,
   Spinner,
   SubHeader,
+  TransparentSpinner,
 } from "../../components";
 import { HotelVerticalItem } from "../../components/hotel-components";
 import { SecBtn } from "../../components/Forms";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useHotelContext } from "../../../context/HotelContext";
+import baseURL from "../../../constants/baseURL";
+import axios from "axios";
+import { useAuthContext } from "../../../context/AuthContext";
 
 const SearchResult = () => {
   const route = useRoute();
   const { hotels } = useHotelContext();
   const { searchedData } = route?.params;
-  const [cityHotels, setCityHotels] = useState([]);
+  const [cityHotels, setCityHotels] = useState(null);
   const [onFilter, setOnFilter] = useState(false);
   const [onFreeCancel, setOnFreeCancel] = useState(false);
   const [onHotel, setOnHotel] = useState(false);
   const navigate = useNavigation();
-  const getSearchedCityHotel = async () => {
-    const tempHotels = await hotels.filter((i) => i.town === searchedData.city);
-    await setCityHotels(tempHotels);
-  };
+  const { config } = useAuthContext();
 
   useEffect(() => {
-    getSearchedCityHotel();
+    axios
+      .get(`${baseURL}/hotel/search/${searchedData?.city}`, config)
+      .then((res) => {
+        setCityHotels(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        Toast.show({
+          topOffset: 60,
+          type: "error",
+          text1: "Error Occur!!!",
+          text2: "Please try again",
+        });
+        navigate.goBack();
+      });
   }, []);
-  // if (!cityHotels) return <Spinner />;
+  if (cityHotels === null) return <TransparentSpinner />;
+  console.log(cityHotels);
   return (
-    <View>
+    <View style={{ marginTop: 5 }}>
       <View
         style={{
           position: "absolute",
           top: 17,
           width: "100%",
           backgroundColor: "white",
-          paddingTop: 15,
+          // paddingTop: 15,
           zIndex: 10,
         }}
       >
@@ -57,7 +73,7 @@ const SearchResult = () => {
             body={`${searchedData?.checkInDate} -- ${searchedData?.checkOutDate} | ${searchedData?.adult} Guest`}
           />
         </View>
-        <View
+        {/* <View
           style={{
             width: "100%",
             paddingHorizontal: 20,
@@ -111,7 +127,7 @@ const SearchResult = () => {
             <FontAwesome name="dollar" size={15} color="black" />
             <Text style={{ fontFamily: FONTS.semiBold }}>NGN</Text>
           </View>
-        </View>
+        </View> */}
       </View>
       {cityHotels.length > 0 ? (
         <View>
@@ -119,7 +135,7 @@ const SearchResult = () => {
             data={cityHotels}
             keyExtractor={(item) => item._id}
             style={{
-              marginTop: 140,
+              marginTop: 80,
               marginHorizontal: 20,
               paddingTop: 20,
             }}

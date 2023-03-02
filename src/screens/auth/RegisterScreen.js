@@ -20,6 +20,7 @@ import axios from "axios";
 import baseURL from "../../../constants/baseURL";
 import { Storage } from "aws-amplify";
 import Spinner from "react-native-loading-spinner-overlay";
+import { useAuthContext } from "../../../context/AuthContext";
 
 const RegisterScreen = () => {
   const [fullName, setFullName] = useState("");
@@ -54,8 +55,8 @@ const RegisterScreen = () => {
     } else {
       let user = {
         name: fullName,
-        email: email,
-        phoneNumber: phone,
+        email: email.toLowerCase(),
+        phoneNumber: phone.toLowerCase().trim(),
         password: password,
         userRole: params.userType,
         profileImg: null,
@@ -226,7 +227,7 @@ const RegisterScreen = () => {
               setInput={setFullName}
             />
             <InputField
-              value={email}
+              value={email.toLowerCase().trim()}
               placeholder="Enter Your Email"
               Icon={MaterialIcons}
               iconName="email"
@@ -234,7 +235,7 @@ const RegisterScreen = () => {
               type={"email-address"}
             />
             <InputField
-              value={phone}
+              value={phone.toLowerCase().trim()}
               placeholder="Enter Your Phone Number"
               Icon={Feather}
               iconName="phone-call"

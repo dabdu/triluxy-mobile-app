@@ -10,6 +10,7 @@ import {
 import React, { useState } from "react";
 import { colors } from "../../constants/theme";
 import { FontAwesome } from "@expo/vector-icons";
+import ImageCont from "./ImageCont";
 
 const ImageSlider = ({ images }) => {
   const [activeImg, setActiveImg] = useState(0);
@@ -22,6 +23,7 @@ const ImageSlider = ({ images }) => {
       setActiveImg(slide);
     }
   };
+  console.log(images);
   return (
     <View style={{ height: 280 }}>
       <ScrollView
@@ -31,8 +33,8 @@ const ImageSlider = ({ images }) => {
         horizontal
       >
         {images.map((e, index) => (
-          <View style={{}} key={index}>
-            <Image
+          <View style={{ height: 250, width: width - 50 }} key={index}>
+            {/* <Image
               style={{
                 height: 250,
                 width: width - 50,
@@ -41,7 +43,8 @@ const ImageSlider = ({ images }) => {
               }}
               source={{ uri: e }}
               resizeMode="contain"
-            />
+            /> */}
+            <ImageCont source={e} />
           </View>
         ))}
       </ScrollView>

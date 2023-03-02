@@ -60,7 +60,10 @@ const Header = ({ placeholder, active, searchPath }) => {
             </Text>
           </View>
           {/* Icon */}
-          <View style={{ position: "relative" }}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Notifications")}
+            style={{ position: "relative" }}
+          >
             <Entypo
               name="dot-single"
               size={40}
@@ -68,7 +71,7 @@ const Header = ({ placeholder, active, searchPath }) => {
               style={{ position: "absolute", right: -3, top: -12, zIndex: 1 }}
             />
             <Ionicons name="notifications-outline" size={30} color={"white"} />
-          </View>
+          </TouchableOpacity>
         </View>
         <Text style={{ color: "white", marginVertical: 5 }}>
           What do you want to do today?
@@ -127,7 +130,7 @@ const Header = ({ placeholder, active, searchPath }) => {
           marginVertical: 2,
         }}
       >
-        {/* <TouchableOpacity
+        <TouchableOpacity
           style={styles.iconContainer}
           onPress={() => navigation.navigate("FlightHome")}
         >
@@ -144,7 +147,7 @@ const Header = ({ placeholder, active, searchPath }) => {
           >
             Flights
           </Text>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
         <TouchableOpacity
           style={styles.iconContainer}
           onPress={() => navigation.navigate("HotelHome")}

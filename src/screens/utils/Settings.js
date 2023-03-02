@@ -1,12 +1,12 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-const CarBookingItem = () => {
+const Settings = () => {
   return (
     <View>
-      <Text>CarBookingItem</Text>
+      <Text>Settings</Text>
     </View>
   );
 };
 
-export default CarBookingItem;
+export default Settings;

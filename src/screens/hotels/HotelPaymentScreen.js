@@ -37,7 +37,10 @@ const HotelPaymentScreen = () => {
             text2: "You can confirm your reservation",
           });
           setBtnLoading(false);
-          navigation.navigate("ManageBooking");
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "ManageBooking" }],
+          });
         }
       })
       .catch((error) => {
@@ -57,7 +60,6 @@ const HotelPaymentScreen = () => {
       });
   };
   if (btnLoading) return <TransparentSpinner />;
-
   return (
     <View style={{ flex: 1 }}>
       <Paystack

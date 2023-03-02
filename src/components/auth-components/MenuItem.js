@@ -3,7 +3,7 @@ import React from "react";
 import { colors, FONTS, SIZES } from "../../../constants/theme";
 import { useNavigation } from "@react-navigation/native";
 
-const MenuItem = ({ Icon, iconName, text, path, onPress }) => {
+const MenuItem = ({ Icon, iconName, text, path, params }) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
@@ -13,7 +13,7 @@ const MenuItem = ({ Icon, iconName, text, path, onPress }) => {
         paddingVertical: 8,
         marginVertical: 5,
       }}
-      onPress={() => navigation.navigate(path)}
+      onPress={() => navigation.navigate(path, { params })}
     >
       <View>
         <Icon name={iconName} color={colors.secondary} size={28} />

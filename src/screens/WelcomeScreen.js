@@ -47,7 +47,7 @@ const WelcomeScreen = () => {
           <View>
             <SecBtn
               text={"Sign Up with Email"}
-              onBtnPress={() => navigation.navigate("RegisterScreen")}
+              onBtnPress={() => navigation.navigate("UserSelectorScreen")}
             />
           </View>
           <View>

@@ -19,6 +19,7 @@ const SearchResultHeader = ({ head, body }) => {
         borderTopColor: "#a3d4fe",
         borderTopWidth: 1,
         ...SHADOWS.dark,
+        marginTop: 20,
       }}
     >
       <View

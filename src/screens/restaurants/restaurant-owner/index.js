@@ -4,6 +4,7 @@ import FilterReservations from "./FilterReservations";
 import ManageOrders from "./ManageOrders";
 import FilteredOrders from "./FilteredOrders";
 import AddRestaurantDetails from "./AddRestaurantDetails";
+import AddMenuItemScreen from "./AddMenuItemScreen";
 export {
   RestaurantAdminHome,
   ManageReservations,
@@ -11,4 +12,5 @@ export {
   ManageOrders,
   FilteredOrders,
   AddRestaurantDetails,
+  AddMenuItemScreen,
 };

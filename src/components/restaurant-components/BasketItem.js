@@ -2,6 +2,7 @@ import { View, Text, Image } from "react-native";
 import React from "react";
 import FormatedNumber from "../FormatedNumber";
 import { colors } from "../../../constants/theme";
+import ImageCont from "../ImageCont";
 
 const BasketItem = ({ data, width }) => {
   const { menuId, menuName, menuImg, price, qty, restaurantId } = data;
@@ -19,7 +20,9 @@ const BasketItem = ({ data, width }) => {
       }}
     >
       <Text>{qty}</Text>
-      <Image source={{ uri: menuImg }} style={{ height: 30, width: 30 }} />
+      <View style={{ height: 30, width: 30 }}>
+        <ImageCont source={menuImg} />
+      </View>
       <Text style={{ width: width ? width : "30%" }}>{menuName}</Text>
       <FormatedNumber value={price} size={12} />
       <View style={{ width: "16%" }}>

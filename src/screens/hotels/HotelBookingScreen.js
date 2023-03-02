@@ -14,6 +14,7 @@ import Toast from "react-native-toast-message";
 import { useHotelContext } from "../../../context/HotelContext";
 import {
   FormatedNumber,
+  ImageCont,
   LineDivider,
   MapMarker,
   SearchResultHeader,
@@ -57,7 +58,9 @@ const HotelBookingScreen = () => {
   const totalPrice = category?.price * calDays;
   let reservationData = {
     userId: authUser?._id,
+    userEmail: authUser?.email,
     hotelId: category?.hotel,
+    hotelAdminId: hotel?.user,
     categoryId: category?._id,
     transId: uuidv4(),
     nights: calDays,
@@ -128,7 +131,10 @@ const HotelBookingScreen = () => {
                       console.log(err);
                     });
                   setLoading(false);
-                  navigation.navigate("ManageBooking");
+                  navigation.reset({
+                    index: 0,
+                    routes: [{ name: "ManageBooking" }],
+                  });
                 }
               })
               .catch((error) => {
@@ -164,10 +170,10 @@ const HotelBookingScreen = () => {
       text2: "Please Other Payment Method",
     });
   };
+  console.log(reservationData);
   if (loading || !hotel) return <TransparentSpinner />;
   return (
-    <View style={{ width: "100%", height: "100%", paddingTop: 31 }}>
-      <SearchResultHeader head="Booking Details" />
+    <View style={{ width: "100%", height: "100%" }}>
       <ScrollView
         style={{
           width: "90%",
@@ -179,12 +185,12 @@ const HotelBookingScreen = () => {
           borderRadius: 10,
           backgroundColor: "white",
         }}
+        showsVerticalScrollIndicator={false}
       >
         <View style={{}}>
-          <Image
-            source={{ uri: hotel?.fImg }}
-            style={{ height: 180, width: "100%", borderRadius: 10 }}
-          />
+          <View style={{ height: 180 }}>
+            <ImageCont source={hotel?.fImg} />
+          </View>
           <View
             style={{
               width: "100%",
@@ -201,7 +207,7 @@ const HotelBookingScreen = () => {
             >
               {hotel?.hotelName}
             </Text>
-            <View style={{ marginHorizontal: 10, marginVertical: 5 }}>
+            <View style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
               <MapMarker
                 location={`${hotel?.address}, ${hotel?.town}, ${hotel?.state} State, Nigeria.`}
               />
@@ -266,6 +272,16 @@ const HotelBookingScreen = () => {
                   }}
                 >
                   You Selected
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: FONTS.medium,
+                    fontSize: SIZES.large,
+                    color: colors.darkSecondary,
+                    paddingVertical: 2,
+                  }}
+                >
+                  {`${category?.categoryName}`}
                 </Text>
                 <Text
                   style={{

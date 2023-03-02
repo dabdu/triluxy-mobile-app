@@ -8,13 +8,13 @@ const SelectRoomScreen = () => {
   const route = useRoute();
   const { searchedData, categories, calDays } = route?.params;
   return (
-    <View style={{ paddingTop: 31 }}>
+    <View style={{ backgroundColor: "white" }}>
       <SearchResultHeader
         head="Select Rooms"
         body={`${searchedData?.checkInDate} |-| ${searchedData?.checkOutDate} `}
       />
       <WarningText text={"Find a cancellation policy that works for you"} />
-      <View style={{ paddingHorizontal: 20, paddingVertical: 30 }}>
+      <View style={{ marginVertical: 40, marginHorizontal: 20 }}>
         <FlatList
           data={categories}
           keyExtractor={(item) => item._id}
@@ -25,7 +25,8 @@ const SelectRoomScreen = () => {
               calDays={calDays}
             />
           )}
-          ListFooterComponent={<View style={{height: 200, width: "100%"}} />}
+          showsVerticalScrollIndicator={false}
+          ListFooterComponent={<View style={{ height: 200, width: "100%" }} />}
         />
       </View>
     </View>

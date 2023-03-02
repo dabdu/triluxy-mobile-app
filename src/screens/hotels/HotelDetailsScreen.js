@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import {
   FilterContainer,
   FormatedNumber,
+  ImageCont,
   ImageSlider,
   MapMarker,
   SearchResultHeader,
@@ -43,7 +44,7 @@ const HotelDetailsScreen = ({}) => {
     searchedData;
   console.log(categories);
   return (
-    <View style={{ paddingTop: 31 }}>
+    <View style={{}}>
       <SearchResultHeader
         head={city}
         body={`${checkInDate} -- ${checkOutDate} | ${adult} Guest`}
@@ -83,19 +84,15 @@ const HotelDetailsScreen = ({}) => {
               </TouchableOpacity>
             </View>
           </View>
-          {images ? (
-            <ImageSlider images={images} />
-          ) : (
-            <Image
-              source={{ uri: fImg }}
-              style={{
-                height: 250,
-                width: width - 50,
-                borderRadius: 10,
-                marginHorizontal: 25,
-              }}
-            />
-          )}
+          <View
+            style={{
+              height: 250,
+              width: width - 50,
+              marginHorizontal: 25,
+            }}
+          >
+            <ImageCont source={fImg} />
+          </View>
         </View>
         <View style={{ paddingHorizontal: 20 }}>
           <View
@@ -120,29 +117,67 @@ const HotelDetailsScreen = ({}) => {
               <Ionicons name="star" size={24} color="orange" />
             </View> */}
           </View>
-          <View style={styles.miniCont}>
-            <Text style={{}}>
-              Price for {`${calDays} Nights, ${searchedData.adult} Adults`}
-            </Text>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <FormatedNumber
-                value={categories[0]?.price * calDays}
-                color={colors.secondary}
-                size={SIZES.extraLarge}
-              />
+          <View
+            style={[
+              styles.miniCont,
+              {
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              },
+            ]}
+          >
+            <View>
+              <Text style={{}}>
+                Price for {`${calDays} Nights, ${searchedData.adult} Adults`}
+              </Text>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <FormatedNumber
+                  value={categories[0]?.price * calDays}
+                  color={colors.secondary}
+                  size={SIZES.extraLarge}
+                />
+              </View>
+              <Text style={{ fontSize: SIZES.small, color: colors.gray }}>
+                Includes tax and fees
+              </Text>
+            </View>
+            <View>
               <Text
                 style={{
-                  marginLeft: 5,
+                  fontSize: SIZES.base,
+                  color: colors.gray,
+                  fontFamily: FONTS.bold,
+                }}
+              >
+                Basic Plan:{" "}
+              </Text>
+              <Text
+                style={{
                   color: colors.primary,
                   fontWeight: "600",
                 }}
               >
                 {categories[0]?.categoryName}
               </Text>
+              <Text
+                style={{
+                  fontFamily: FONTS.extraBold,
+                  color: colors.gray,
+                  textDecorationLine: "underline",
+                  textDecorationColor: colors.gray,
+                }}
+                onPress={() =>
+                  navigation.navigate("SelectRoomScreen", {
+                    searchedData,
+                    categories,
+                    calDays,
+                  })
+                }
+              >
+                More Plans
+              </Text>
             </View>
-            <Text style={{ fontSize: SIZES.small, color: colors.gray }}>
-              Includes tax and fees
-            </Text>
           </View>
           <View style={styles.miniCont}>
             <View style={{ flexDirection: "row" }}>
@@ -230,19 +265,17 @@ const HotelDetailsScreen = ({}) => {
             </Text>
           </View> */}
           {/* <MapMarker location={``} /> */}
-          <View style={styles.miniCont}>
+          <View
+            style={[
+              styles.miniCont,
+              {
+                paddingVertical: 15,
+                paddingHorizontal: 25,
+              },
+            ]}
+          >
             <Text style={{ fontFamily: FONTS.bold }}>Address: </Text>
-            <Text
-              style={{
-                fontSize: SIZES.font,
-                fontFamily: FONTS.regular,
-                fontWeight: "500",
-                color: "gray",
-                fontStyle: "italic",
-              }}
-            >
-              {`${address}, ${town}, ${state}, Nigeria.`}
-            </Text>
+            <MapMarker location={`${address}, ${town}, ${state}, Nigeria.`} />
           </View>
           <View style={styles.miniCont}>
             <SubHeader text={"Description"} color={colors.primary} />
@@ -257,7 +290,8 @@ const HotelDetailsScreen = ({}) => {
               {description}
             </Text>
           </View>
-          <View style={styles.miniCont}>
+          {/* Facilities */}
+          {/* <View style={styles.miniCont}>
             <SubHeader text={"Facilities"} color={colors.primary} />
             <View>
               {facilities.map((item, index) => (
@@ -286,7 +320,7 @@ const HotelDetailsScreen = ({}) => {
                 </View>
               ))}
             </View>
-          </View>
+          </View> */}
         </View>
         <View style={{ height: 125, width: "100%" }} />
       </ScrollView>
@@ -299,7 +333,7 @@ const HotelDetailsScreen = ({}) => {
         }}
       >
         <SecBtn
-          text={"Select Room"}
+          text={"Continue"}
           onBtnPress={() =>
             navigation.navigate("SelectRoomScreen", {
               searchedData,

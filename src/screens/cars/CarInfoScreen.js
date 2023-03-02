@@ -2,6 +2,7 @@ import { View, Text, ScrollView, Image, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import {
   FormatedNumber,
+  ImageCont,
   ImageSlider,
   LineDivider,
   MapMarker,
@@ -175,10 +176,9 @@ const CarInfoScreen = () => {
                 <Text style={styles.textSub}>{carOwner?.phoneNumber}</Text>
               </View>
             </View>
-            <Image
-              source={{ uri: carOwner?.profileImg }}
-              style={{ height: 120, width: 120, borderRadius: 999 }}
-            />
+            <View style={{ height: 120, width: 120 }}>
+              <ImageCont source={carOwner?.profileImg} radius={999} />
+            </View>
           </View>
         </View>
         {/* map Section */}

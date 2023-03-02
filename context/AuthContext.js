@@ -11,51 +11,11 @@ const AuthContextProvider = ({ children }) => {
   const [authUser, setAuthUser] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [splashLoading, setSplashLoading] = useState(true);
+  const [splashLoading, setSplashLoading] = useState(false);
   const navigation = useNavigation();
-  // const Stack = createStackNavigator();
-  // const getUser = async () => {
-  //   try {
-  //     const jsonValue = await AsyncStorage.getItem("user");
-  //     if (!jsonValue) {
-  //       setAuthUser(null);
-  //       console.log("error");
-  //       // navigation.navigate("LoginScreen");
-  //       navigation.reset({
-  //         index: 0,
-  //         routes: [{ name: "LoginScreen" }],
-  //       });
-  //     } else {
-  //       await setAuthUser(JSON.parse(jsonValue));
-  //       RNRestart.Restart();
-  //     }
-  //     // return jsonValue != null ? JSON.parse(jsonValue) : null;
-  //   } catch (e) {
-  //     console.log(e);
-  //     // error reading value
-  //   }
-  // };
-  // const getUserInfo = async () => {
-  //   if (authUser) {
-  //     const config = {
-  //       headers: {
-  //         Authorization: `Bearer ${authUser?.token}`,
-  //       },
-  //     };
-  //     await axios
-  //       .get(`${baseURL}/user/get-user-info`, config)
-  //       .then((res) => {
-  //         setUserInfo(res.data);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }
-  // };
   const saveUser = async (value) => {
     try {
       const jsonValue = JSON.stringify(value);
-      // console.log(jsonValue);
       await AsyncStorage.setItem("user", jsonValue);
       if (value.userRole === "resAdmin") {
         navigation.reset({
@@ -108,19 +68,9 @@ const AuthContextProvider = ({ children }) => {
     setIsLoading(true);
     axios
       .post(`${baseURL}/user/login`, user)
-      // .then((res) => res.json())
       .then((res) => {
-        // let tempUser = res.data;
         saveUser(res.data);
         setAuthUser(res.data);
-        // console.log("User From Login", tempUser);
-        // const jsonValue = JSON.stringify(tempUser);
-        // await AsyncStorage.setItem("authUser", jsonValue);
-        // saveUser(tempUser);
-        // await AsyncStorage.setItem(
-        //   "authUser",
-        //   JSON.stringify(authUser)
-        // );
         setIsLoading(false);
       })
       .catch((error) => {
@@ -138,19 +88,18 @@ const AuthContextProvider = ({ children }) => {
     try {
       setSplashLoading(true);
       let tempUserInfo = await AsyncStorage.getItem("user");
-      // console.log(tempUserInfo);
-      // tempUserInfo = JSON.parse(tempUserInfo);
-      // console.log("User Fron Async", tempUserInfo);
       if (tempUserInfo) {
         setAuthUser(JSON.parse(tempUserInfo));
+      } else {
+        setAuthUser(null);
       }
+
       setSplashLoading(false);
     } catch (e) {
       setSplashLoading(false);
       console.log("is Logged Error ", e);
     }
   };
-  // console.log(authUser);
   useEffect(() => {
     // getUser();
     // getUserInfo();
@@ -176,6 +125,7 @@ const AuthContextProvider = ({ children }) => {
         Login,
         authUser,
         splashLoading,
+        setSplashLoading,
         config,
         userId,
       }}

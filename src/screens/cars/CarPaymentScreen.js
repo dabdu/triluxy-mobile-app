@@ -76,7 +76,10 @@ const CarPaymentScreen = () => {
           }));
           setPickupDate("Choose Date");
           setReturnDate("Choose Date");
-          navigation.navigate("ManageBooking");
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "ManageBooking" }],
+          });
         }
       })
       .catch((error) => {

@@ -13,7 +13,7 @@ const OnBoardingScreen = () => {
           flex: 1,
           alignItems: "center",
           justifyContent: "space-between",
-          marginVertical: 30,
+          marginVertical: 20,
         }}
       >
         <Image
@@ -51,7 +51,7 @@ const OnBoardingScreen = () => {
         <View style={{ width: "70%" }}>
           <SecBtn
             text={"Get Started"}
-            onBtnPress={() => navigation.navigate("RegisterScreen")}
+            onBtnPress={() => navigation.navigate("UserSelectorScreen")}
           />
           <Text
             style={{

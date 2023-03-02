@@ -1,4 +1,3 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createStackNavigator } from "@react-navigation/stack";
 import { colors } from "../../constants/theme";
 import {
@@ -6,6 +5,7 @@ import {
   ManageBooking,
   ManageCarRentals,
   ManageDishesOrders,
+  ManageHotelReservations,
   ManageRestaurantReservations,
   ManageTaxiBookings,
   MenuOrderDetails,
@@ -78,6 +78,7 @@ import {
   RestaurantAdminHome,
   ManageOrders,
   FilteredOrders,
+  AddMenuItemScreen,
 } from "../screens/restaurants/restaurant-owner";
 import {
   FilterDeliveries,
@@ -85,12 +86,26 @@ import {
   ManageRiderRequest,
   RiderHome,
 } from "../screens/rider";
-// const Stack = createNativeStackNavigator();
+import {
+  ManageAccount,
+  Notifications,
+  PrivacyPolicy,
+  Settings,
+} from "../screens/utils";
+import TermsAndConditions from "../screens/utils/TermsAndConditions";
+import {
+  AddHotelDetails,
+  AdminHotelDetails,
+  FilterBookings,
+  HotelAdminHome,
+  ManageBookings,
+  ManageMyHotels,
+} from "../screens/hotels/hotel-admin";
 
 const Stack = createStackNavigator();
 const AppStack = () => {
   const { authUser } = useAuthContext();
-
+  console.log(authUser);
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
@@ -103,6 +118,8 @@ const AppStack = () => {
           ? "TaxiDriverHome"
           : authUser?.userRole === "rider"
           ? "RiderHome"
+          : authUser?.userRole === "hotelAdmin"
+          ? "HotelAdminHome"
           : "RestaurantAdminHome"
       }
     >
@@ -121,8 +138,96 @@ const AppStack = () => {
       <Stack.Screen name="SearchResult" component={SearchResult} />
       <Stack.Screen name="HotelDetailsScreen" component={HotelDetailsScreen} />
       <Stack.Screen name="SelectRoomScreen" component={SelectRoomScreen} />
-      <Stack.Screen name="HotelBookingScreen" component={HotelBookingScreen} />
+      <Stack.Screen
+        name="HotelBookingScreen"
+        options={{
+          headerShown: true,
+          headerBackTitle: false,
+          headerTitle: "Booking Details",
+          headerTintColor: "white",
+          headerStyle: { backgroundColor: colors.secondary },
+          headerBackTitleVisible: false,
+        }}
+        component={HotelBookingScreen}
+      />
       <Stack.Screen name="HotelPaymentScreen" component={HotelPaymentScreen} />
+      <Stack.Screen
+        name="HotelAdminHome"
+        component={HotelAdminHome}
+        options={{
+          headerShown: true,
+          headerBackTitle: false,
+          headerTitle: "Reservation Requests",
+          headerTintColor: "white",
+          headerStyle: { backgroundColor: colors.secondary },
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="AddHotelDetails"
+        component={AddHotelDetails}
+        options={{
+          headerShown: true,
+          headerBackTitle: false,
+          headerTitle: "Add Hotel Details",
+          headerTintColor: "white",
+          headerStyle: { backgroundColor: colors.secondary },
+        }}
+      />
+      <Stack.Screen
+        name="ManageMyHotels"
+        component={ManageMyHotels}
+        options={{
+          headerShown: true,
+          headerBackTitle: false,
+          headerTitle: "Manage My Hotels",
+          headerTintColor: "white",
+          headerStyle: { backgroundColor: colors.secondary },
+        }}
+      />
+      <Stack.Screen
+        name="ManageHotelReservations"
+        component={ManageHotelReservations}
+        options={{
+          headerShown: true,
+          headerBackTitle: false,
+          headerTitle: "Manage Reservations",
+          headerTintColor: colors.secondary,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+      <Stack.Screen
+        name="AdminHotelDetails"
+        component={AdminHotelDetails}
+        options={{
+          headerShown: true,
+          headerTitle: "Hotel Details",
+          headerTintColor: "white",
+          headerStyle: { backgroundColor: colors.secondary },
+        }}
+      />
+      <Stack.Screen
+        name="ManageBookings"
+        component={ManageBookings}
+        options={{
+          headerShown: true,
+          headerBackTitle: false,
+          headerTitle: "Manage Bookings",
+          headerTintColor: colors.secondary,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+      <Stack.Screen
+        name="FilterBookings"
+        component={FilterBookings}
+        options={{
+          headerShown: true,
+          headerBackTitle: false,
+          headerTitle: "Manage Bookings",
+          headerTintColor: "white",
+          headerStyle: { backgroundColor: colors.secondary },
+        }}
+      />
       {/* Hotel Screenss Screen Ends HEre*/}
       {/* Car Screens Screens Ends Here */}
       <Stack.Screen name="CarHome" component={CarHome} />
@@ -446,6 +551,17 @@ const AppStack = () => {
           headerBackTitleVisible: false,
         }}
       />
+      <Stack.Screen
+        name="AddMenuItemScreen"
+        component={AddMenuItemScreen}
+        options={{
+          headerShown: true,
+          headerTitle: "Add Menu Item",
+          headerTintColor: "white",
+          headerStyle: { backgroundColor: colors.secondary },
+          headerBackTitleVisible: false,
+        }}
+      />
 
       {/* Restaurants Screenss Screen Ends HEre*/}
 
@@ -513,6 +629,64 @@ const AppStack = () => {
           headerBackTitleVisible: false,
         }}
       />
+      {/* Other Screens Starts Here */}
+      <Stack.Screen
+        name="ManageAccount"
+        component={ManageAccount}
+        options={{
+          headerShown: true,
+          headerBackTitle: false,
+          headerTitle: "Profile Details",
+          headerTintColor: colors.secondary,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+      <Stack.Screen
+        name="Notifications"
+        component={Notifications}
+        options={{
+          headerShown: true,
+          headerBackTitle: false,
+          headerTitle: "Notifications",
+          headerTintColor: "white",
+          headerStyle: { backgroundColor: colors.secondary },
+        }}
+      />
+      <Stack.Screen
+        name="Settings"
+        component={Settings}
+        options={{
+          headerShown: true,
+          headerBackTitle: false,
+          headerTitle: "Settings",
+          headerTintColor: colors.secondary,
+          headerStyle: { backgroundColor: "white" },
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="PrivacyPolicy"
+        component={PrivacyPolicy}
+        options={{
+          headerShown: true,
+          headerBackTitle: false,
+          headerTitle: "Privacy Policy",
+          headerTintColor: colors.secondary,
+          headerStyle: { backgroundColor: "white" },
+        }}
+      />
+      <Stack.Screen
+        name="TermsAndConditions"
+        component={TermsAndConditions}
+        options={{
+          headerShown: true,
+          headerBackTitle: false,
+          headerTitle: "Terms & Conditions",
+          headerTintColor: "white",
+          headerStyle: { backgroundColor: colors.secondary },
+        }}
+      />
+      {/* Other Screens Ends Here */}
     </Stack.Navigator>
   );
 };

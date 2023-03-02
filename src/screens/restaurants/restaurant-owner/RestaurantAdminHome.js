@@ -19,6 +19,7 @@ const RestaurantAdminHome = () => {
   const [onReservations, setOnReservations] = useState(true);
   const [onOrders, setOnOrders] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [screenLoading, setScreenLoading] = useState(true);
 
   const { authUser, config, userId } = useAuthContext();
   const {
@@ -69,35 +70,43 @@ const RestaurantAdminHome = () => {
       setIsLoading(false);
     };
   }, []);
-  if (!currentRestaurant) return <AddRestaurantDetails />;
   return (
-    <View style={{ height: "100%", width: "100%" }}>
-      <Spinner visible={isLoading} />
-      <View>
-        <ReservationOrderTab
-          onReservations={onReservations}
-          setOnReservations={setOnReservations}
-          onOrders={onOrders}
-          setOnOrders={setOnOrders}
-          newTabText="New Reservations"
-          prevTabText="New Orders"
-        />
-      </View>
-      {onReservations ? (
-        <UserReservationsContainer
-          data={resReservations}
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
-        />
+    <>
+      {currentRestaurant ? (
+        <View style={{ height: "100%", width: "100%" }}>
+          <Spinner visible={isLoading} />
+          <View>
+            <ReservationOrderTab
+              onReservations={onReservations}
+              setOnReservations={setOnReservations}
+              onOrders={onOrders}
+              setOnOrders={setOnOrders}
+              newTabText="New Reservations"
+              prevTabText="New Orders"
+            />
+          </View>
+          {onReservations ? (
+            <UserReservationsContainer
+              data={resReservations}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+            />
+          ) : (
+            <UserOrdersContainer
+              data={resOrders}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+            />
+          )}
+          <Footer
+            active={"restaurantHome"}
+            searchPath={"RestaurantAdminHome"}
+          />
+        </View>
       ) : (
-        <UserOrdersContainer
-          data={resOrders}
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
-        />
+        <AddRestaurantDetails />
       )}
-      <Footer active={"restaurantHome"} searchPath={"RestaurantAdminHome"} />
-    </View>
+    </>
   );
 };
 

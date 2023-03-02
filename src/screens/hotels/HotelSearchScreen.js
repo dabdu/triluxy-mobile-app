@@ -23,7 +23,7 @@ import {
   FontAwesome5,
   EvilIcons,
 } from "@expo/vector-icons";
-import { colors, FONTS, SIZES } from "../../../constants/theme";
+import { colors, FONTS, SIZES, spaces } from "../../../constants/theme";
 import { SecBtn } from "../../components/Forms";
 import { useNavigation } from "@react-navigation/native";
 import Footer from "../../components/Layouts/Footer";
@@ -126,10 +126,10 @@ const HotelSearchScreen = () => {
   if (!hotels) return <Spinner />;
 
   return (
-    <View>
+    <View style={{ height: "100%" }}>
       <ScrollView style={{ backgroundColor: colors.bgGray, marginBottom: 20 }}>
         <SemiRounded>
-          <View style={{ marginVertical: 20 }}>
+          <View style={{}}>
             <View
               style={{
                 flexDirection: "row",
@@ -144,13 +144,13 @@ const HotelSearchScreen = () => {
                 }}
                 style={{ height: 40, width: 40, borderRadius: 100 }}
               />
-              <View>
+              {/* <View>
                 <Ionicons
                   name="notifications-outline"
                   size={35}
                   color="white"
                 />
-              </View>
+              </View> */}
             </View>
             <Text
               style={{

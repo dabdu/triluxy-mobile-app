@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import {
   FormatedNumber,
+  ImageCont,
   LineDivider,
   MapMarker,
   SubHeader,
@@ -119,10 +120,9 @@ const BookedDetails = () => {
                   <Text style={styles.textSub}>{user?.phoneNumber}</Text>
                 </View>
               </View>
-              <Image
-                source={{ uri: user?.profileImg }}
-                style={{ height: 120, width: 120, borderRadius: 999 }}
-              />
+              <View style={{ height: 120, width: 120 }}>
+                <ImageCont source={user?.profileImg} radius={999} />
+              </View>
             </View>
           </View>
         )}
@@ -163,15 +163,15 @@ const BookedDetails = () => {
               width: "100%",
             }}
           >
-            <Image
-              source={{ uri: car?.carImages[0] }}
+            <View
               style={{
                 height: 100,
                 width: 100,
                 borderRadius: 30,
-                marginVertical: 10,
               }}
-            />
+            >
+              <ImageCont source={car?.carImage} radius={30} />
+            </View>
             <View>
               <SubHeader text={car?.carName} color={colors.primary} />
               <Text>Model: {`${car?.carModel}`}</Text>
