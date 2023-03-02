@@ -10,6 +10,7 @@ import React from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import {
   FormatedNumber,
+  ImageCont,
   LineDivider,
   MapMarker,
   SubHeader,
@@ -38,6 +39,7 @@ const OrdersDetails = () => {
     transactionRef,
   } = data;
   const { authUser } = useAuthContext();
+  console.log(user?.profileImg);
   if (!data || !restaurant) return <TransparentSpinner />;
   return (
     <ScrollView>
@@ -99,10 +101,9 @@ const OrdersDetails = () => {
                   <Text style={styles.textSub}>{user?.phoneNumber}</Text>
                 </View>
               </View>
-              <Image
-                source={{ uri: user?.profileImg }}
-                style={{ height: 120, width: 120, borderRadius: 999 }}
-              />
+              <View style={{ height: 120, width: 120, borderRadius: 999 }}>
+                <ImageCont source={user?.profileImg} radius={999} />
+              </View>
             </View>
           </View>
         ) : (
@@ -133,15 +134,9 @@ const OrdersDetails = () => {
               Details
             </Text>
             <LineDivider />
-            <Image
-              source={{ uri: fImg }}
-              style={{
-                height: 120,
-                width: 120,
-                borderRadius: 50,
-                marginVertical: 10,
-              }}
-            />
+            <View style={{ height: 120, width: 120, marginVertical: 10 }}>
+              <ImageCont source={fImg} radius={50} />
+            </View>
             <SubHeader text={restaurantName} color={colors.primary} />
             <MapMarker location={`${address}, ${town}, ${state}.`} />
             <PrimaryBtn

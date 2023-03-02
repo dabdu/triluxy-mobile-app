@@ -11,6 +11,7 @@ export const colors = {
   darkGray: "#c4c2c2",
   successColor: "#01DB73",
   errorColor: "#bf0603",
+  veryFaintGray: "#F7F7F7",
 };
 
 export const fonts = {
@@ -24,6 +25,10 @@ export const SIZES = {
   medium: 16,
   large: 18,
   extraLarge: 24,
+};
+
+export const spaces = {
+  top: 23,
 };
 
 export const FONTS = {

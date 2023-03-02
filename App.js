@@ -2,7 +2,6 @@ import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { colors } from "./constants/theme";
-import RootNavigator from "./src/navigation";
 import { useFonts } from "expo-font";
 import Toast from "react-native-toast-message";
 import "react-native-get-random-values";
@@ -27,19 +26,6 @@ export default function App() {
     OpenSansMedium: require("./assets/fonts/OpenSans-Medium.ttf"),
     OpenSansLight: require("./assets/fonts/OpenSans-Light.ttf"),
   });
-  const { authUser } = useAuthContext();
-
-  // useEffect(() => {
-  //   if (authUser === null) {
-  //     navigation.reset({
-  //       index: 0,
-  //       routes: [{ name: "LoginScreen" }],
-  //     });
-  //     console.log("APP MPUNT");
-  //   }
-  // }, []);
-  // if (!authUser) return <TransparentSpinner />;
-  // console.log(authUser);
   if (!loaded) return null;
   return (
     <NavigationContainer>
@@ -54,8 +40,6 @@ export default function App() {
                       backgroundColor={colors.secondary}
                       barStyle="light-content"
                     />
-                    {/* {authUser !== null ? <AppStack /> : <AuthStack />} */}
-                    {/* <RootNavigator /> */}
                     <AppNavigation />
                     <Toast />
                   </CarContextProvider>

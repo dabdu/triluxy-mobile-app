@@ -8,7 +8,6 @@ import { colors, FONTS, SIZES } from "../../../constants/theme";
 import { NoResult } from "../../components";
 
 const FilterTDeliveries = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const { riderBookings, rider } = useRiderContext();
   const route = useRoute();
   const { status } = route?.params;

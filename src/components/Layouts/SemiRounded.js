@@ -11,7 +11,7 @@ const SemiRounded = ({ children }) => {
         backgroundColor: colors.secondary,
         borderTopColor: colors.secondary,
         borderTopWidth: 0.5,
-        marginTop: 32,
+        marginTop: 22,
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
       }}

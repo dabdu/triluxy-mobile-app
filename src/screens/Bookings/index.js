@@ -2,6 +2,7 @@ import BookedCarDetails from "./BookedCarDetails";
 import ManageBooking from "./ManageBookings";
 import ManageCarRentals from "./ManageCarRentals";
 import ManageDishesOrders from "./ManageDishesOrders";
+import ManageHotelReservations from "./ManageHotelReservations";
 import ManageRestaurantReservations from "./ManageRestaurantReservations";
 import ManageTaxiBookings from "./ManageTaxiBookings";
 import MenuOrderDetails from "./MenuOrderDetails";
@@ -20,4 +21,5 @@ export {
   BookedCarDetails,
   ManageTaxiBookings,
   TaxiBookingDetails,
+  ManageHotelReservations,
 };

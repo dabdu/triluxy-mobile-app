@@ -7,6 +7,7 @@ import { SecBtn } from "../Forms";
 import { useRestaurantContext } from "../../../context/RestaurantContext";
 import Toast from "react-native-toast-message";
 import { useNavigation } from "@react-navigation/native";
+import ImageCont from "../ImageCont";
 
 const RestaurantMenuItem = ({ data }) => {
   const [qty, setQty] = useState(1);
@@ -42,10 +43,10 @@ const RestaurantMenuItem = ({ data }) => {
         flexDirection: "row",
       }}
     >
-      <Image
-        source={{ uri: data?.menuImg }}
-        style={{ height: 70, width: 70, borderRadius: 10 }}
-      />
+      <View style={{ height: 70, width: 70 }}>
+        <ImageCont source={data?.menuImg} />
+      </View>
+
       <View
         style={{
           flexDirection: "row",
@@ -59,11 +60,12 @@ const RestaurantMenuItem = ({ data }) => {
             flexDirection: "column",
             justifyContent: "space-between",
             paddingVertical: 6,
+            width: "70%",
           }}
         >
           <Text
             style={{
-              fontFamily: FONTS.bold,
+              fontFamily: FONTS.medium,
               fontSize: SIZES.medium,
               color: colors.darkPrimary,
             }}

@@ -4,6 +4,7 @@ import { colors, FONTS, SHADOWS, SIZES } from "../../../constants/theme";
 import MapMarker from "../MapMarker";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import ImageCont from "../ImageCont";
 
 const RestaurantVerticalItem = ({ data, searchedData }) => {
   const navigation = useNavigation();
@@ -21,15 +22,14 @@ const RestaurantVerticalItem = ({ data, searchedData }) => {
         navigation.navigate("RestaurantDetails", { data, searchedData })
       }
     >
-      <Image
-        source={{ uri: fImg }}
+      <View
         style={{
-          height: 150,
-          width: "100%",
-          borderTopRightRadius: 10,
-          borderTopLeftRadius: 10,
+          height: 200,
+          // width: "100%",
         }}
-      />
+      >
+        <ImageCont source={fImg} />
+      </View>
       <View style={{ paddingVertical: 10, paddingHorizontal: 20 }}>
         <Text
           style={{

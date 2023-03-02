@@ -10,60 +10,35 @@ import {
   FontAwesome,
   AntDesign,
   MaterialCommunityIcons,
+  Ionicons,
+  Fontisto,
+  FontAwesome5,
 } from "@expo/vector-icons";
 import Footer from "../../components/Layouts/Footer";
 import { colors, FONTS, SIZES } from "../../../constants/theme";
 import { useAuthContext } from "../../../context/AuthContext";
-import { Spinner, TransparentSpinner } from "../../components";
+import { TransparentSpinner } from "../../components";
 import { MenuItem } from "../../components/auth-components";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
-import Toast from "react-native-toast-message";
-import { useEffect } from "react";
 import { S3Image } from "aws-amplify-react-native";
-import { useTaxiContext } from "../../../context/TaxiContext";
+import { useState } from "react";
+import { useEffect } from "react";
+import Spinner from "react-native-loading-spinner-overlay/lib";
 
 const ProfileScreen = () => {
-  const navigation = useNavigation();
-  const { authUser, onLogout, isLoading } = useAuthContext();
-  const { driver } = useTaxiContext();
-  console.log(driver);
-  // console.log(authUser);
-  // if (!authUser) return <Spinner />;
-  // const getUser = async () => {
-  //   try {
-  //     const jsonValue = await AsyncStorage.getItem("user");
-  //     if (!jsonValue) {
-  //       console.log("error from aysnc");
-  //       // navigation.navigate("LoginScreen");
-  //       // navigation.reset({
-  //       //   index: 0,
-  //       //   routes: [{ name: "LoginScreen" }],
-  //       // });
-  //     } else {
-  //       console.log(JSON.parse(jsonValue));
-  //     }
-  //     // return jsonValue != null ? JSON.parse(jsonValue) : null;
-  //   } catch (e) {
-  //     console.log(e);
-  //     // error reading value
-  //   }
-  // };
+  const [onLoading, setOnLoading] = useState(true);
+  const { authUser, onLogout } = useAuthContext();
   useEffect(() => {
-    // console.log("mounted");
-    console.log(authUser);
-    // getUser();
+    const timer = setTimeout(() => {
+      setOnLoading(false);
+    }, 1000);
+    return () => clearTimeout(timer);
   }, []);
-  if (isLoading) return <TransparentSpinner />;
+  // if (onLoading) return <TransparentSpinner />;
   return (
-    <View
-      style={{
-        width: "100%",
-        height: "100%",
-      }}
-    >
+    <View>
       <ScrollView>
         {/* Header */}
+        <Spinner visible={onLoading} />
         <View style={{ position: "relative", alignItems: "center" }}>
           <View
             style={{
@@ -131,7 +106,7 @@ const ProfileScreen = () => {
               Icon={FontAwesome}
               iconName={"user-circle"}
               text={"Manage Account"}
-              path={"ManageAccountScreen"}
+              path={"ManageAccount"}
             />
             {authUser?.userRole === "carRentor" && (
               <>
@@ -149,6 +124,22 @@ const ProfileScreen = () => {
                 />
               </>
             )}
+            {authUser?.userRole === "hotelAdmin" && (
+              <>
+                <MenuItem
+                  Icon={FontAwesome5}
+                  iconName={"hotel"}
+                  text={"Manage Hotels Details"}
+                  path={"ManageMyHotels"}
+                />
+                <MenuItem
+                  Icon={Fontisto}
+                  iconName={"hotel"}
+                  text={"Add New Hotel Details"}
+                  path={"AddHotelDetails"}
+                />
+              </>
+            )}
             {authUser?.userRole === "taxiDriver" && (
               <>
                 <MenuItem
@@ -159,24 +150,50 @@ const ProfileScreen = () => {
                 />
               </>
             )}
+            {authUser?.userRole === "resAdmin" && (
+              <>
+                <MenuItem
+                  Icon={MaterialCommunityIcons}
+                  iconName={"food-takeout-box-outline"}
+                  text={"Add Dish to Menu"}
+                  path={"AddMenuItemScreen"}
+                  params={"FOOD"}
+                />
+                <MenuItem
+                  Icon={Ionicons}
+                  iconName={"md-fast-food-outline"}
+                  text={"Add Drink to Menu"}
+                  path={"AddMenuItemScreen"}
+                  params={"DRINK"}
+                />
+              </>
+            )}
             <MenuItem
-              Icon={FontAwesome}
-              iconName={"user-circle"}
-              text={"Manage Account"}
-              path={"ManageAccountScreen"}
+              Icon={Ionicons}
+              iconName={"notifications-outline"}
+              text={"Notifications"}
+              path={"Notifications"}
             />
             <MenuItem
-              Icon={FontAwesome}
-              iconName={"user-circle"}
-              text={"Manage Account"}
-              path={"ManageAccountScreen"}
+              Icon={AntDesign}
+              iconName={"dingding-o"}
+              text={"PrivacyPolicy"}
+              path={"Privacy Policy"}
             />
             <MenuItem
-              Icon={FontAwesome}
-              iconName={"user-circle"}
-              text={"Manage Account"}
-              path={"ManageAccountScreen"}
+              Icon={AntDesign}
+              iconName={"API"}
+              text={"Terms & Conditions"}
+              path={"TermsAndConditions"}
             />
+            <MenuItem
+              Icon={Ionicons}
+              iconName={"ios-settings"}
+              text={"Settings"}
+              path={"Settings"}
+            />
+
+            {/* Logout */}
             <TouchableOpacity
               style={{
                 flexDirection: "row",
@@ -187,13 +204,13 @@ const ProfileScreen = () => {
               onPress={onLogout}
             >
               <View>
-                <AntDesign name={"logout"} color={colors.primary} size={28} />
+                <AntDesign name={"logout"} color={colors.secondary} size={28} />
               </View>
               <Text
                 style={{
                   marginLeft: 12,
-                  fontSize: SIZES.small,
-                  color: colors.darkPrimary,
+                  fontSize: SIZES.medium,
+                  color: colors.primary,
                   fontFamily: FONTS.semiBold,
                 }}
               >
@@ -202,6 +219,7 @@ const ProfileScreen = () => {
             </TouchableOpacity>
           </View>
         </View>
+        <View style={{ height: 100, width: "100%" }} />
       </ScrollView>
       <Footer active={"profile"} />
     </View>

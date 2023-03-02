@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import React from "react";
 import Footer from "../../components/Layouts/Footer";
-import { NewPreviousTab } from "../../components";
+import { NewPreviousTab, TransparentSpinner } from "../../components";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useAuthContext } from "../../../context/AuthContext";
@@ -54,6 +54,7 @@ const RiderHome = () => {
     };
     // }
   }, []);
+  if (isLoading) return <Spinner />;
   return (
     <View style={{ height: "100%", width: "100%" }}>
       <Spinner visible={isLoading} />
@@ -67,7 +68,7 @@ const RiderHome = () => {
           prevTabText="Completed Requests"
         />
       </View>
-      {onNew ? (
+      {/* {onNew ? (
         <RiderUserContainer
           data={riderBookings}
           rider={rider}
@@ -83,7 +84,7 @@ const RiderHome = () => {
           setIsLoading={setIsLoading}
           tab="previous"
         />
-      )}
+      )} */}
       <Footer active={"rider-home"} />
     </View>
   );

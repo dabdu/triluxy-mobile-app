@@ -18,7 +18,7 @@ const CarContextProvider = ({ children }) => {
   const [returnDate, setReturnDate] = useState("Choose Date");
   const [travelTimeInformation, setTravelTimeInformation] = useState(null);
   const [travelPrice, setTravelPrice] = useState(null);
-  const [availableCars, setAvailableCars] = useState(null);
+  const [availableCars, setAvailableCars] = useState([]);
   const [pickupCity, setPickupCity] = useState(null);
   const [rentorBookings, setRentorBookings] = useState(null);
   const [bookings, setBookings] = useState(null);
@@ -37,15 +37,12 @@ const CarContextProvider = ({ children }) => {
             setAvailableCars(res.data);
           })
           .catch((err) => {
+            setAvailableCars([]);
             console.log(err);
           });
-        return () => {
-          setAvailableCars([]);
-        };
       }
     })();
   }, [authUser]);
-  useEffect(() => {}, []);
   return (
     <CarContext.Provider
       value={{

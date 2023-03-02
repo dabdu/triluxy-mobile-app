@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import {
   FilterContainer,
   FormatedNumber,
+  ImageCont,
   ImageSlider,
   MapMarker,
   SearchResultHeader,
@@ -39,7 +40,6 @@ const RestaurantDetails = ({}) => {
     address,
     description,
     fImg,
-    facilities,
     restaurantName,
     images,
     state,
@@ -95,26 +95,23 @@ const RestaurantDetails = ({}) => {
   };
   if (btnLoading) return <TransparentSpinner />;
   return (
-    <View style={{ paddingTop: 31, height: "100%" }}>
+    <View style={{ paddingTop: 23, height: "100%" }}>
       <SearchResultHeader
         head={city}
         body={`${checkInDate} | ${persons} Persons`}
       />
       <ScrollView style={{ backgroundColor: "white" }}>
         <View style={{ width: "100%", marginTop: 20 }}>
-          {images ? (
-            <ImageSlider images={images} />
-          ) : (
-            <Image
-              source={{ uri: fImg }}
-              style={{
-                height: 250,
-                width: width - 50,
-                borderRadius: 10,
-                marginHorizontal: 25,
-              }}
-            />
-          )}
+          <View
+            style={{
+              height: 250,
+              width: width - 50,
+              borderRadius: 10,
+              marginHorizontal: 25,
+            }}
+          >
+            <ImageCont source={fImg} />
+          </View>
         </View>
         <View style={{ paddingHorizontal: 20 }}>
           <View
@@ -206,7 +203,8 @@ const RestaurantDetails = ({}) => {
               {description}
             </Text>
           </View>
-          <View style={styles.miniCont}>
+          {/* Facilities */}
+          {/* <View style={styles.miniCont}>
             <SubHeader text={"Facilities"} color={colors.primary} />
             <View>
               {facilities.map((item, index) => (
@@ -235,7 +233,7 @@ const RestaurantDetails = ({}) => {
                 </View>
               ))}
             </View>
-          </View>
+          </View> */}
         </View>
         <View style={{ height: 70, width: "100%" }} />
       </ScrollView>

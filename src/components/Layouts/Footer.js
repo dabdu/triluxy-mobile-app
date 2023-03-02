@@ -304,6 +304,63 @@ const Footer = ({ active, searchPath }) => {
           </TouchableOpacity> */}
         </>
       )}
+      {/* Hotel Admin Only MEnu Items  */}
+      {authUser?.userRole === "hotelAdmin" && (
+        <>
+          <TouchableOpacity
+            style={styles.iconContainer}
+            onPress={() => navigation.navigate("HotelAdminHome")}
+          >
+            <Ionicons
+              name="home-outline"
+              size={24}
+              color={
+                active === "hotel-admin-home"
+                  ? colors.primary
+                  : colors.secondary
+              }
+            />
+            <Text
+              style={[
+                styles.text,
+                {
+                  color:
+                    active === "hotel-admin-home"
+                      ? colors.primary
+                      : colors.secondary,
+                },
+              ]}
+            >
+              Home
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.iconContainer}
+            onPress={() => navigation.navigate("ManageBookings")}
+          >
+            <MaterialCommunityIcons
+              name="briefcase-outline"
+              size={24}
+              color={
+                active === "hotel-bookings" ? colors.primary : colors.secondary
+              }
+            />
+            <Text
+              style={[
+                styles.text,
+                {
+                  color:
+                    active === "hotel-bookings"
+                      ? colors.primary
+                      : colors.secondary,
+                },
+              ]}
+            >
+              Bookings
+            </Text>
+          </TouchableOpacity>
+        </>
+      )}
       {/* Taxi Driver Only MEnu Items  */}
       {authUser?.userRole === "taxiDriver" && (
         <>

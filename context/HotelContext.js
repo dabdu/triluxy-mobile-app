@@ -5,6 +5,8 @@ const HotelContext = createContext({});
 
 const HotelContextProvider = ({ children }) => {
   const [hotels, setHotels] = useState([]);
+  const [hotelReservations, setHotelReservations] = useState([]);
+  const [userReservations, setUserReservations] = useState(null);
   useEffect(() => {
     axios
       .get(`${baseURL}/hotel/allhotels`)
@@ -19,7 +21,17 @@ const HotelContextProvider = ({ children }) => {
     };
   }, []);
   return (
-    <HotelContext.Provider value={{ hotels }}>{children}</HotelContext.Provider>
+    <HotelContext.Provider
+      value={{
+        hotels,
+        userReservations,
+        setUserReservations,
+        hotelReservations,
+        setHotelReservations,
+      }}
+    >
+      {children}
+    </HotelContext.Provider>
   );
 };
 

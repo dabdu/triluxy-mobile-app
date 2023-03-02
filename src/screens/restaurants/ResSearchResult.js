@@ -50,7 +50,7 @@ const ResSearchResult = () => {
           top: 17,
           width: "100%",
           backgroundColor: "white",
-          paddingTop: 15,
+          paddingTop: 5,
           zIndex: 10,
         }}
       >
@@ -60,7 +60,7 @@ const ResSearchResult = () => {
             body={`${searchedData?.checkInDate} | ${searchedData?.persons} Persons`}
           />
         </View>
-        <View
+        {/* <View
           style={{
             width: "100%",
             paddingHorizontal: 20,
@@ -114,7 +114,7 @@ const ResSearchResult = () => {
             <FontAwesome name="dollar" size={15} color="black" />
             <Text style={{ fontFamily: FONTS.semiBold }}>NGN</Text>
           </View>
-        </View>
+        </View> */}
       </View>
       {cityRestaurants.length > 0 ? (
         <View>
@@ -122,7 +122,7 @@ const ResSearchResult = () => {
             data={cityRestaurants}
             keyExtractor={(item) => item._id}
             style={{
-              marginTop: 140,
+              marginTop: 80,
               marginHorizontal: 20,
               paddingTop: 20,
             }}

@@ -17,12 +17,13 @@ const CarResultItem = ({ data }) => {
   return (
     <View
       style={{
-        borderColor: colors.secondary,
-        borderWidth: 1,
-        marginVertical: 8,
+        // borderColor: colors.secondary,
+        // borderWidth: 1,
+        marginVertical: 15,
         borderRadius: 10,
         backgroundColor: "white",
         width: "100%",
+        ...SHADOWS.dark,
       }}
     >
       <View style={{ flexDirection: "row", alignItems: "center" }}>

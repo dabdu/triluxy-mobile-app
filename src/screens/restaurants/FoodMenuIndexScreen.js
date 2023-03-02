@@ -2,7 +2,14 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import React, { useState, useEffect } from "react";
 import { SearchResultHeader, TransparentSpinner } from "../../components";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { colors, FONTS, SHADOWS, SIZES, width } from "../../../constants/theme";
+import {
+  colors,
+  FONTS,
+  SHADOWS,
+  SIZES,
+  spaces,
+  width,
+} from "../../../constants/theme";
 import { SecBtn } from "../../components/Forms";
 import { useAuthContext } from "../../../context/AuthContext";
 import axios from "axios";
@@ -15,7 +22,7 @@ import {
 import { useRestaurantContext } from "../../../context/RestaurantContext";
 
 const FoodMenuIndexScreen = ({}) => {
-  const [menuItems, setMenuItems] = useState(null);
+  const [menuItems, setMenuItems] = useState([]);
   const [btnLoading, setBtnLoading] = useState(false);
   const [activeFoods, setActiveFoods] = useState(true);
   const [activeDrinks, setActiveDrinks] = useState(false);
@@ -41,9 +48,6 @@ const FoodMenuIndexScreen = ({}) => {
           .catch((err) => {
             console.log(err);
           });
-        return () => {
-          setMenuItems([]);
-        };
       }
     })();
   }, [authUser]);
@@ -52,11 +56,12 @@ const FoodMenuIndexScreen = ({}) => {
     setCurrentBasket(tempBasket);
     console.log(currentBasket);
   }, [basket]);
+  console.log(menuItems);
   if (btnLoading || !menuItems) return <TransparentSpinner />;
   return (
     <View
       style={{
-        paddingTop: 31,
+        paddingTop: spaces.top,
         backgroundColor: "white",
         height: "100%",
       }}

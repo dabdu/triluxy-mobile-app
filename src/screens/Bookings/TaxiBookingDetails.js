@@ -18,8 +18,8 @@ import axios from "axios";
 import { useAuthContext } from "../../../context/AuthContext";
 
 const TaxiBookingDetails = () => {
-  const [car, setCar] = useState(null);
-  const [user, setUser] = useState(null);
+  const [car, setCar] = useState({});
+  const [user, setUser] = useState({});
   const route = useRoute();
   const { data } = route?.params;
   const {
@@ -46,20 +46,21 @@ const TaxiBookingDetails = () => {
       await axios
         .get(`${baseURL}/taxi/details/${assignedCarId}`, config)
         .then(async (res) => {
-          setCar(res.data);
+          console.log(res);
           // if (status === 200) {
           let searchedId =
             authUser?.userRole === "taxiDriver"
               ? data?.userId
               : res.data?.userId;
-          console.log(data?.userId);
+          console.log(res.data?.userId);
           await axios
-            .get(`${baseURL}/user/user/${searchedId}`, config)
+            .get(`${baseURL}/user/user/${data?.userId}`, config)
             .then((res) => {
-              setUser(res.data);
+              console.log(res.data);
             })
             .catch((err) => {
               console.log(err);
+              set;
             });
           // }
         })
@@ -73,7 +74,7 @@ const TaxiBookingDetails = () => {
     };
     fetchData();
   }, []);
-  if (car === null || user === null) return <TransparentSpinner />;
+  // if (car === null || user === null) return <TransparentSpinner />;
   console.log(user);
   return (
     <ScrollView style={{ paddingVertical: 20 }}>

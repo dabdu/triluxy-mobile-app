@@ -52,7 +52,7 @@ const CarSearchResult = () => {
           top: 17,
           width: "100%",
           backgroundColor: "white",
-          paddingTop: 15,
+          paddingTop: 5,
           // paddingHorizontal: 20,
           zIndex: 10,
         }}
@@ -63,7 +63,7 @@ const CarSearchResult = () => {
             body={`${pickupDate} - ${returnDate}`}
           />
         </View>
-        <View
+        {/* <View
           style={{
             width: "100%",
             paddingHorizontal: 20,
@@ -117,14 +117,14 @@ const CarSearchResult = () => {
             <FontAwesome name="dollar" size={15} color="black" />
             <Text style={{ fontFamily: FONTS.semiBold }}>NGN</Text>
           </View>
-        </View>
+        </View> */}
       </View>
       <View style={{ backgroundColor: colors.bgGray }}>
         <FlatList
           data={cars}
           keyExtractor={(item) => item._id}
           style={{
-            marginTop: 140,
+            marginTop: 80,
             marginHorizontal: 20,
             paddingTop: 20,
           }}
@@ -141,7 +141,7 @@ const CarSearchResult = () => {
           }
           renderItem={({ item }) => <CarResultItem data={item} />}
           showsVerticalScrollIndicator={false}
-          ListFooterComponent={<View style={{ height: 90, width: "100%" }} />}
+          ListFooterComponent={<View style={{ height: 50, width: "100%" }} />}
         />
       </View>
       {/* Filter Container */}

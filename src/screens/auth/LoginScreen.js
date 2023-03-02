@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, Alert } from "react-native";
+import { StyleSheet, Text, View, Image, Alert, TextInput } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
@@ -22,6 +22,7 @@ const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [text, setText] = useState("");
   const navigation = useNavigation();
   const { isLoading, Login } = useAuthContext();
 
@@ -51,7 +52,7 @@ const LoginScreen = () => {
   const handleSubmit = () => {
     setLoading(true);
     const user = {
-      email,
+      email: email.toLowerCase().trim(),
       password,
     };
     if (email === "" || password === "") {
@@ -131,7 +132,7 @@ const LoginScreen = () => {
             enableOnAndroid={true}
           >
             <InputField
-              value={email}
+              value={email.toLowerCase().trim()}
               placeholder="Enter Your Email"
               Icon={MaterialIcons}
               iconName="email"

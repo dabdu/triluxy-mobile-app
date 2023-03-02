@@ -5,14 +5,14 @@ import FormatedNumber from "../FormatedNumber";
 import MapMarker from "../MapMarker";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-// import moment from "moment";
 import baseURL from "../../../constants/baseURL";
-import Spinner from "../Spinner";
-import TransparentSpinner from "../TransparentSpinner";
+import ImageCont from "../ImageCont";
+import { Octicons } from "@expo/vector-icons";
+import Toast from "react-native-toast-message";
 
 const HotelVerticalItem = ({ data, searchedData }) => {
   const navigation = useNavigation();
-  const { hotelName, fImg, state, town } = data;
+  const { hotelName, fImg, address, state, town } = data;
   const [category, setCategory] = useState({});
   const [categories, setCategories] = useState([]);
   const [calDays, setCalDays] = useState(null);
@@ -50,7 +50,7 @@ const HotelVerticalItem = ({ data, searchedData }) => {
   };
   useEffect(() => {
     axios
-      .get(`${baseURL}/category/allcategories/${data._id}`)
+      .get(`${baseURL}/category/hotel/categories/${data._id}`)
       .then((res) => {
         setCategories(res.data);
         setCategory(res.data[0]);
@@ -64,7 +64,7 @@ const HotelVerticalItem = ({ data, searchedData }) => {
     };
   }, []);
 
-  if (!category?.categoryName) return <TransparentSpinner />;
+  // if (!category?.categoryName) return <TransparentSpinner />;
 
   return (
     <TouchableOpacity
@@ -77,29 +77,49 @@ const HotelVerticalItem = ({ data, searchedData }) => {
         flexDirection: "row",
         alignItems: "center",
         // justifyContent: "space-between",
+        paddingVertical: 15,
+        paddingHorizontal: 20,
+        position: "relative",
       }}
-      onPress={() =>
-        navigation.navigate("HotelDetailsScreen", {
-          data,
-          searchedData,
-          categories,
-          calDays,
-        })
-      }
+      onPress={() => {
+        if (categories.length > 0) {
+          navigation.navigate("HotelDetailsScreen", {
+            data,
+            searchedData,
+            categories,
+            calDays,
+          });
+        } else {
+          Toast.show({
+            topOffset: 60,
+            type: "error",
+            text1: "This hotel is not ready to be booked",
+            text2:
+              "Please Choose another Hotel in within your preferred Destination",
+          });
+        }
+      }}
     >
-      {/* Image */}
-      <Image
-        source={{ uri: fImg }}
-        style={{
-          height: "100%",
-          width: "40%",
-          borderTopLeftRadius: 10,
-          borderBottomLeftRadius: 10,
-        }}
+      <Octicons
+        name="verified"
+        size={30}
+        color={colors.successColor}
+        style={{ position: "absolute", right: 5, top: 5 }}
       />
+      {/* Image */}
+      <View style={{ height: 140, width: "40%" }}>
+        <ImageCont source={fImg} />
+        {/* borderTopLeftRadius: 10,
+          borderBottomLeftRadius: 10, */}
+      </View>
       {/* Description */}
       <View
-        style={{ width: "60%", paddingHorizontal: 15, paddingVertical: 15 }}
+        style={{
+          width: "60%",
+          paddingTop: 15,
+          paddingHorizontal: 20,
+          paddingRight: 20,
+        }}
       >
         <Text
           style={{
@@ -137,23 +157,17 @@ const HotelVerticalItem = ({ data, searchedData }) => {
             {data.star}
           </Text>
         </View> */}
-        <View style={{ height: 1, width: "100%", backgroundColor: "gray" }} />
-        <MapMarker location={`${state} State`} />
-        <Text style={{ fontFamily: FONTS.bold }}>
-          address:{" "}
-          <Text
-            style={{
-              fontSize: SIZES.small,
-              fontFamily: FONTS.regular,
-              fontWeight: "500",
-              color: "gray",
-              fontStyle: "italic",
-            }}
-          >
-            {data.address}
-          </Text>
-        </Text>
-
+        <View
+          style={{
+            height: 1,
+            width: "100%",
+            backgroundColor: "gray",
+            marginVertical: 10,
+          }}
+        />
+        <View style={{ marginRight: 10 }}>
+          <MapMarker location={`${address}, ${town}, ${state} State.`} />
+        </View>
         <View
           style={{
             flexDirection: "column",
@@ -162,6 +176,15 @@ const HotelVerticalItem = ({ data, searchedData }) => {
           }}
         >
           <Text style={{ fontSize: SIZES.small, marginVertical: 2 }}>
+            <Text
+              style={{
+                fontSize: SIZES.base,
+                color: colors.gray,
+                fontFamily: FONTS.bold,
+              }}
+            >
+              Basic Plan:{" "}
+            </Text>
             {category?.categoryName}
           </Text>
           <Text
